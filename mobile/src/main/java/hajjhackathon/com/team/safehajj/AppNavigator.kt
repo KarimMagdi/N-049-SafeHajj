@@ -9,7 +9,7 @@ import android.content.Intent
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import hajjhackathon.com.team.safehajj.activity.AuthenticationActivity
-import hajjhackathon.com.team.safehajj.activity.HomeActivity
+import hajjhackathon.com.team.safehajj.activity.MapsActivity
 
 
 object AppNavigator{
@@ -28,8 +28,8 @@ object AppNavigator{
     /**
      * Navigate to main activity application entry point after splash
      */
-    fun goToMainActivity(activity: Activity , deepLinkUri : String? =  null) {
-        val intent = Intent(activity, HomeActivity::class.java)
+    fun goToMapsActivity(activity: Activity , deepLinkUri : String? =  null) {
+        val intent = Intent(activity, MapsActivity::class.java)
         deepLinkUri?.let {
             intent.putExtra(DEEP_LINK_URI,it)
         }

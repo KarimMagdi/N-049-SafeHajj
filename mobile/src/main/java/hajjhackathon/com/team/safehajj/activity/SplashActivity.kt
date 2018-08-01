@@ -31,7 +31,7 @@ class SplashActivity : AppCompatActivity() {
        var userName =  SharedPreferenceUtil.getStringPreference(this, AppConstants.USER_NAME_KEY)
         when (userName != null){
              true -> {
-                 AppNavigator.goToMainActivity(this,deeplLinkUri)
+                 AppNavigator.goToMapsActivity(this,deeplLinkUri)
              }
 
             false -> {
