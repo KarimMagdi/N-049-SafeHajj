@@ -1,0 +1,40 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    tools:context="hajjhackathon.com.team.safehajj.fragment.CreateJoinCircleFragment">
+
+    <ImageView
+        android:id="@+id/imgV_appIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        tools:text="Safe Hajj"
+        android:id="@+id/textView_appName"
+        android:layout_below="@+id/imgV_appIcon"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        
+        android:layout_above="@id/btn_joinCircle"
+        android:id="@+id/btn_createCircle"
+        android:text="Create Circle"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+    <Button
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/btn_joinCircle"
+        android:text="Join Circle"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+
+</RelativeLayout>
