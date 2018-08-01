@@ -10,14 +10,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <fragment
-            class="hajjhackathon.com.team.DeviceListFragment"
+            class="hajjhackathon.com.team.wifi.DeviceListFragment"
             android:id="@+id/frag_list"
             android:layout_width="match_parent"
             android:layout_height="@dimen/phone_list_height">
             <!-- Preview: layout=@layout/row_devices -->
         </fragment>
         <fragment
-            class="hajjhackathon.com.team.DeviceDetailFragment"
+            class="hajjhackathon.com.team.wifi.DeviceDetailFragment"
             android:id="@+id/frag_detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
