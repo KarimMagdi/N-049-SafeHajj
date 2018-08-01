@@ -25,7 +25,7 @@ public class DatabaseRepo {
         }
     }
 
-    public static List<HajjLocation> getAllLocations() {
+    public static void getAllLocations(final IDataBaseRepo iDataBaseRepo) {
         getInstance();
 
         mDatabase.addValueEventListener(new ValueEventListener() {
@@ -47,6 +47,7 @@ public class DatabaseRepo {
                         locationList.add(hajjLocation);
                     }
                 }
+                iDataBaseRepo.showAllLocations(locationList);
             }
 
             @Override
@@ -55,7 +56,6 @@ public class DatabaseRepo {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
-        return locationList;
     }
 
 }
