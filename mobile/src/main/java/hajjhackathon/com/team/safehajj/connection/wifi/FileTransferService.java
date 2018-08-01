@@ -1,6 +1,6 @@
 // Copyright 2011 Google Inc. All Rights Reserved.
 
-package hajjhackathon.com.team.wifi;
+package hajjhackathon.com.team.safehajj.connection.wifi;
 
 import android.app.IntentService;
 import android.content.ContentResolver;

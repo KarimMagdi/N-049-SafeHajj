@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package hajjhackathon.com.team.wifi;
+package hajjhackathon.com.team.safehajj.connection.wifi;
 
 import android.app.ListFragment;
 import android.app.ProgressDialog;
@@ -36,7 +36,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import hajjhackathon.com.team.R;
+import hajjhackathon.com.team.safehajj.R;
 
 /**
  * A ListFragment that displays available peers on discovery and requests the

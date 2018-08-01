@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "hajjhackathon.com.team_45"
+        applicationId "hajjhackathon.com.team.safehajj"
         minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
@@ -29,6 +29,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.0.2'
     implementation 'com.google.firebase:firebase-database:16.0.1'
     implementation 'com.google.firebase:firebase-messaging:17.1.0'
+    implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation 'com.google.android.gms:play-services-location:15.0.1'
     implementation 'com.google.firebase:firebase-functions:15.0.0'
 

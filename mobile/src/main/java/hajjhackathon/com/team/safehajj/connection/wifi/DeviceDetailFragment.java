@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package hajjhackathon.com.team.wifi;
+package hajjhackathon.com.team.safehajj.connection.wifi;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -43,7 +43,7 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import hajjhackathon.com.team.R;
+import hajjhackathon.com.team.safehajj.R;
 
 
 public class DeviceDetailFragment extends Fragment implements ConnectionInfoListener {

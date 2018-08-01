@@ -1,8 +1,4 @@
-package hajjhackathon.com.team.gps;
-
-import android.location.Location;
-import android.os.Parcel;
-import android.os.Parcelable;
+package hajjhackathon.com.team.safehajj.connection.gps;
 
 import java.io.Serializable;
 

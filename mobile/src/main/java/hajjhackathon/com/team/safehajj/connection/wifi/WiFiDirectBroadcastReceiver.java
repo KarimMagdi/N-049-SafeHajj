@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package hajjhackathon.com.team.wifi;
+package hajjhackathon.com.team.safehajj.connection.wifi;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -26,7 +26,7 @@ import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.net.wifi.p2p.WifiP2pManager.PeerListListener;
 import android.util.Log;
 
-import hajjhackathon.com.team.R;
+import hajjhackathon.com.team.safehajj.R;
 
 
 public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {

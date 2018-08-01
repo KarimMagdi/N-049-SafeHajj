@@ -1,4 +1,4 @@
-package hajjhackathon.com.team.gps;
+package hajjhackathon.com.team.safehajj.connection.gps;
 
 import android.Manifest;
 import android.app.Activity;

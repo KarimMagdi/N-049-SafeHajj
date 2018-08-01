@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="hajjhackathon.com.team">
+    package="hajjhackathon.com.team.safehajj">
 
     <uses-sdk android:minSdkVersion="14" />
 
@@ -14,6 +14,11 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <permission
+        android:name="hajjhackathon.com.team.safehajj.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="hajjhackathon.com.team.safehajj.permission.MAPS_RECEIVE" />
+
     <!-- Google Play filtering -->
     <uses-feature
         android:name="android.hardware.wifi.direct"
@@ -26,32 +31,35 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!--<activity-->
-        <!--android:name=".safehajj.activity.SplashActivity"-->
-        <!--android:launchMode="singleTask"-->
-        <!--android:theme="@style/AppTheme.FullScreen">-->
-        <!--<intent-filter>-->
-        <!--<action android:name="android.intent.action.MAIN" />-->
-
-        <!--<category android:name="android.intent.category.LAUNCHER" />-->
-        <!--</intent-filter>-->
-        <!--<intent-filter>-->
-        <!--<action android:name="android.intent.action.VIEW" />-->
-
-        <!--<category android:name="android.intent.category.DEFAULT" />-->
-        <!--<category android:name="android.intent.category.BROWSABLE" />-->
-
-        <!--<data-->
-        <!--android:host="circle/"-->
-        <!--android:scheme="safehajj" />-->
-        <!--</intent-filter>-->
-        <!--</activity>-->
         <activity
-            android:name=".gps.MainActivity"
+            android:name=".activity.SplashActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="circle/"
+                    android:scheme="safehajj" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".connection.gps.MainActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -60,12 +68,13 @@
         </activity>
 
         <service
-            android:name=".gps.TrackingService"
+            android:name=".connection.gps.TrackingService"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".safehajj.activity.HomeActivity" />
-        <activity android:name=".safehajj.activity.AuthenticationActivity" />
+        <activity
+            android:name=".activity.AuthenticationActivity"
+            android:screenOrientation="portrait" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -79,8 +88,9 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".safehajj.activity.MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:name=".activity.MapsActivity"
+            android:label="@string/title_activity_maps"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

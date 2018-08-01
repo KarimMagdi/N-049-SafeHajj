@@ -1,4 +1,4 @@
-package hajjhackathon.com.team.gps;
+package hajjhackathon.com.team.safehajj.connection.gps;
 
 import android.Manifest;
 import android.app.Notification;
@@ -13,7 +13,6 @@ import android.location.Location;
 import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -28,9 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 
-import java.util.List;
-
-import hajjhackathon.com.team.R;
+import hajjhackathon.com.team.safehajj.R;
 
 
 public class TrackingService extends Service {

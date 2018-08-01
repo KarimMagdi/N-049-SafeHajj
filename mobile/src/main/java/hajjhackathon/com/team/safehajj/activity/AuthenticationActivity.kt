@@ -2,7 +2,7 @@ package hajjhackathon.com.team.safehajj.activity
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import hajjhackathon.com.team.R
+import hajjhackathon.com.team.safehajj.R
 import hajjhackathon.com.team.safehajj.AppNavigator
 import hajjhackathon.com.team.safehajj.fragment.CreateOrJoinCircleFragment
 
