@@ -34,6 +34,7 @@ public class TrackingService extends Service {
 
     private static final String TAG = TrackingService.class.getSimpleName();
     public static String TOKEN;
+    public static String circleId;
 
     @Override
     public IBinder onBind(Intent intent) {
