@@ -20,4 +20,8 @@
     <string name="test_email">myvodafonespain@gmail.com</string>
     <string name="test_password">Windows.2000</string>
     <string name="firebase_path">safecirclehajj</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
