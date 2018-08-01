@@ -13,6 +13,8 @@ import android.location.Location;
 import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.Toast;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -24,12 +26,17 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+
+import java.util.List;
+
 import hajjhackathon.com.team.R;
 
 
 public class TrackingService extends Service {
 
     private static final String TAG = TrackingService.class.getSimpleName();
+    public static String TOKEN;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -82,10 +89,11 @@ public class TrackingService extends Service {
                 //If the user has been authenticated...//
                 if (task.isSuccessful()) {
                     //...then call requestLocationUpdates//
+                    Log.d(TAG, "Firebase authentication Succedded");
                     requestLocationUpdates();
                 } else {
                     //If sign in fails, then log the error//
-                    Log.d(TAG, "Firebase authentication failed");
+                    Log.d(TAG, "Firebase authentication failed" + task.getException().getMessage());
                 }
             }
         });
@@ -98,22 +106,35 @@ public class TrackingService extends Service {
         request.setInterval(10000);
         //Get the most accurate location data available//
         request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(this);
-        final String path = getString(R.string.firebase_path);
+
+        //Get Device Token
+        TOKEN = FirebaseInstanceId.getInstance().getToken();
+        Log.d(TAG, "Firebase Token " + TOKEN);
+
         int permission = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
         //If the app currently has access to the location permission...//
+        FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(this);
         if (permission == PackageManager.PERMISSION_GRANTED) {
             //...then request location updates//
             client.requestLocationUpdates(request, new LocationCallback() {
                 @Override
                 public void onLocationResult(LocationResult locationResult) {
                     //Get a reference to the database, so your app can perform read and write operations//
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference(path);
-                    Location location = locationResult.getLastLocation();
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference(TOKEN);
+                    Location location = (Location) locationResult.getLastLocation();
+                    HajjLocation hajjLocation = new HajjLocation();
+                    hajjLocation.setAdmin(false);
+                    hajjLocation.setAltitude(location.getAltitude());
+                    hajjLocation.setLatitude(location.getLatitude());
+                    hajjLocation.setLongitude(location.getLongitude());
+                    hajjLocation.setTime(location.getTime());
+                    //hajjLocation.setVerticalAccuracyMeters(location.getVerticalAccuracyMeters());
                     if (location != null) {
                         //Save the location data to the database//
-                        ref.setValue(location);
+                        Log.d(TAG, "Firebase Location " + hajjLocation);
+                        ref.setValue(hajjLocation);
+                        Log.d(TAG, "Firebase Locations: " + DatabaseRepo.getAllLocations().size());
                     }
                 }
             }, null);
