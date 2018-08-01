@@ -54,7 +54,16 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".safehajj.activity.HomeActivity"></activity>
+        <activity android:name=".safehajj.activity.HomeActivity"/>
+
+        <intent-filter >
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="safehajj"
+                android:host="circle/" />
+        </intent-filter>
+
     </application>
 
 </manifest>

@@ -8,7 +8,7 @@ import android.app.Activity
 import android.content.Intent
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
-import hajjhackathon.com.team.gps.MainActivity
+import hajjhackathon.com.team.safehajj.activity.HomeActivity
 
 
 object AppNavigator{

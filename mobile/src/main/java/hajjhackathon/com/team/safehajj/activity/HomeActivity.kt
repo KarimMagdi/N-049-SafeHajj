@@ -2,6 +2,7 @@ package hajjhackathon.com.team.safehajj.activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import hajjhackathon.com.team.R
 
 class HomeActivity : AppCompatActivity() {
 
