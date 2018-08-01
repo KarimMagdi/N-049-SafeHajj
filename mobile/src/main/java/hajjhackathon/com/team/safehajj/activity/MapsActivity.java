@@ -3,13 +3,18 @@ package hajjhackathon.com.team.safehajj.activity;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import hajjhackathon.com.team.R;
+
+import java.util.List;
+
+
+import hajjhackathon.com.team.safehajj.R;
+import hajjhackathon.com.team.safehajj.connection.gps.DatabaseRepo;
+import hajjhackathon.com.team.safehajj.connection.gps.HajjLocation;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -39,9 +44,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+      List<HajjLocation> allLocations =  DatabaseRepo.getAllLocations();
+                            LatLng latLng;
+        for(int i =0;i<allLocations.size();i++){
+                HajjLocation location = allLocations.get(i);
+                    latLng = new LatLng(location.getLatitude()
+                            , location.getLongitude());
+
+   mMap.addMarker(new MarkerOptions().position(latLng));
+
+            }
+
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 }
