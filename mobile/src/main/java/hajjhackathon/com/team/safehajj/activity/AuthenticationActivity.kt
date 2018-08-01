@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import hajjhackathon.com.team.safehajj.R
 import hajjhackathon.com.team.safehajj.AppNavigator
-import hajjhackathon.com.team.safehajj.fragment.CreateOrJoinCircleFragment
 
 class AuthenticationActivity : AppCompatActivity() {
 
@@ -12,7 +11,7 @@ class AuthenticationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authentication)
 
-        AppNavigator.loadFragment(this, CreateOrJoinCircleFragment.newInstance(),getAuthContainerId(),false)
+        //AppNavigator.loadFragment(this, CreateJoinCircleFragment.newInstance(),getAuthContainerId(),false)
     }
 
     private fun getAuthContainerId(): Int {
