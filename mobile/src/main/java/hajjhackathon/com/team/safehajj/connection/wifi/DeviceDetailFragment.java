@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package hajjhackathon.com.team.wifi;
+package hajjhackathon.com.team.safehajj.connection.wifi;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;

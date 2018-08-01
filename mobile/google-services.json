@@ -54,7 +54,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1013460037541:android:349708912700e013",
         "android_client_info": {
-          "package_name": "hajjhackathon.com.team_45"
+          "package_name": "hajjhackathon.com.team.safehajj"
         }
       },
       "oauth_client": [
@@ -62,7 +62,7 @@
           "client_id": "1013460037541-0j8t5a3vqagtqevg0brs75982liuk7lq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "hajjhackathon.com.team_45",
+            "package_name": "hajjhackathon.com.team.safehajj",
             "certificate_hash": "e3244a76ddaf4ba1fe53615663bc8139e599c12e"
           }
         },

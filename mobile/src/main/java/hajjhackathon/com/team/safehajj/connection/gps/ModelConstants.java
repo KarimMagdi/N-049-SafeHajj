@@ -1,4 +1,4 @@
-package hajjhackathon.com.team.gps;
+package hajjhackathon.com.team.safehajj.connection.gps;
 
 public class ModelConstants {
 

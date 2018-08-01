@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "hajjhackathon.com.team_45"
+        applicationId "hajjhackathon.com.team.safehajj"
         minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
