@@ -131,7 +131,7 @@ public class TrackingService extends Service {
                         //Save the location data to the database//
                         Log.d(TAG, "Firebase Location " + hajjLocation);
                         ref.setValue(hajjLocation);
-                        Log.d(TAG, "Firebase Locations: " + DatabaseRepo.getAllLocations().size());
+                       //Log.d(TAG, "Firebase Locations: " + DatabaseRepo.getAllLocations(this).size());
                     }
                 }
             }, null);
