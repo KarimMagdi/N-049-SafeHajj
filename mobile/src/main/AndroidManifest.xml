@@ -37,6 +37,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter >
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="safehajj"
+                    android:host="circle/" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".gps.MainActivity"
@@ -54,16 +61,11 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".safehajj.activity.HomeActivity"/>
+        <activity android:name=".safehajj.activity.HomeActivity" />
 
-        <intent-filter >
-            <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.DEFAULT" />
-            <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="safehajj"
-                android:host="circle/" />
-        </intent-filter>
 
+
+        <activity android:name=".safehajj.activity.AuthenticationActivity"/>
     </application>
 
 </manifest>
