@@ -8,6 +8,7 @@ import android.app.Activity
 import android.content.Intent
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
+import hajjhackathon.com.team.gps.MainActivity
 
 
 object AppNavigator{
@@ -17,12 +18,12 @@ object AppNavigator{
      * Navigate to main activity application entry point after splash
      */
     fun goToMainActivity(activity: Activity , deepLinkUri : String? =  null) {
-//        val intent = Intent(activity, MainActivity::class.java)
-//        deepLinkUri?.let {
-//            intent.putExtra(DEEP_LINK_URI,it)
-//        }
-//        activity.startActivity(intent)
-//        activity.finish()
+        val intent = Intent(activity, HomeActivity::class.java)
+        deepLinkUri?.let {
+            intent.putExtra(DEEP_LINK_URI,it)
+        }
+        activity.startActivity(intent)
+        activity.finish()
     }
 
 
