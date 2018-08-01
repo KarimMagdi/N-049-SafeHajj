@@ -36,7 +36,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import hajjhackathon.com.team.R;
+import hajjhackathon.com.team.safehajj.R;
 
 /**
  * An activity that uses WiFi Direct APIs to discover and connect with available
