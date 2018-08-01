@@ -8,12 +8,23 @@ import android.app.Activity
 import android.content.Intent
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
+import hajjhackathon.com.team.safehajj.activity.AuthenticationActivity
 import hajjhackathon.com.team.safehajj.activity.HomeActivity
 
 
 object AppNavigator{
 
      val DEEP_LINK_URI: String = "deeplink_uri"
+
+
+    fun goToAuthenticationActivity(activity: Activity, deepLinkUri: String?) {
+        val intent = Intent(activity, AuthenticationActivity::class.java)
+        deepLinkUri?.let {
+            intent.putExtra(DEEP_LINK_URI,it)
+        }
+        activity.startActivity(intent)
+        activity.finish()    }
+
     /**
      * Navigate to main activity application entry point after splash
      */
@@ -39,4 +50,6 @@ object AppNavigator{
                     fragment,fragment::class.java.name).addToBackStack(null).commit()
         }
     }
+
+
 }

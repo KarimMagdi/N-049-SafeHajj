@@ -4,7 +4,9 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import hajjhackathon.com.team.R
+import hajjhackathon.com.team.safehajj.AppConstants
 import hajjhackathon.com.team.safehajj.AppNavigator
+import hajjhackathon.com.team.safehajj.util.SharedPreferenceUtil
 
 class SplashActivity : AppCompatActivity() {
 
@@ -26,8 +28,17 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun afterSplashAction() {
+       var userName =  SharedPreferenceUtil.getStringPreference(this, AppConstants.USER_NAME_KEY)
+        when (userName != null){
+             true -> {
+                 AppNavigator.goToMainActivity(this,deeplLinkUri)
+             }
 
-        AppNavigator.goToMainActivity(this,deeplLinkUri)
+            false -> {
+                AppNavigator.goToAuthenticationActivity(this,deeplLinkUri)
+
+            }
+        }
     }
 
 }
