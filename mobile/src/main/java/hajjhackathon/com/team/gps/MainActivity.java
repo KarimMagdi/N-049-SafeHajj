@@ -19,25 +19,18 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         //Check whether GPS tracking is enabled//
-
         LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             finish();
         }
-
         //Check whether this app has access to the location permission//
-
-
         int permission = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
-
-//If the location permission has been granted, then start the TrackerService//
-
+        //If the location permission has been granted, then start the TrackerService//
         if (permission == PackageManager.PERMISSION_GRANTED) {
             startTrackerService();
         } else {
-
-//If the app doesn’t currently have access to the user’s location, then request access//
+            //If the app doesn’t currently have access to the user’s location, then request access//
 
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
