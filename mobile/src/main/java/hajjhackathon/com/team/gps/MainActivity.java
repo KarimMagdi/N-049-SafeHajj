@@ -41,34 +41,23 @@ public class MainActivity extends Activity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[]
             grantResults) {
-
-//If the permission has been granted...//
-
+        //If the permission has been granted...//
         if (requestCode == PERMISSIONS_REQUEST && grantResults.length == 1
                 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
             //...then start the GPS tracking service//
-
             startTrackerService();
         } else {
-
-//If the user denies the permission request, then display a toast with some more information//
-
+            //If the user denies the permission request, then display a toast with some more information//
             Toast.makeText(this, "Please enable location services to allow GPS tracking", Toast.LENGTH_SHORT).show();
         }
     }
 
-//Start the TrackerService//
-
+    //Start the TrackerService//
     private void startTrackerService() {
         startService(new Intent(this, TrackingService.class));
-
-//Notify the user that tracking has been enabled//
-
+        //Notify the user that tracking has been enabled//
         Toast.makeText(this, "GPS tracking enabled", Toast.LENGTH_SHORT).show();
-
-//Close MainActivity//
-
+        //Close MainActivity//
         finish();
     }
 
