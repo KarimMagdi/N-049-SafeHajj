@@ -52,9 +52,53 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1013460037541:android:349708912700e013",
+        "mobilesdk_app_id": "1:1013460037541:android:0db99ead59d0c581",
         "android_client_info": {
           "package_name": "hajjhackathon.com.team.safehajj"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1013460037541-721supsg0e5ohldhb6k7f6rq7ar48ebq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "hajjhackathon.com.team.safehajj",
+            "certificate_hash": "e3244a76ddaf4ba1fe53615663bc8139e599c12e"
+          }
+        },
+        {
+          "client_id": "1013460037541-qgthhem9efteegrrbae6426qlmjrpmgr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNuaHNR8MtoGKyu48ulMOgYOKoTNt8Pxw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1013460037541-qgthhem9efteegrrbae6426qlmjrpmgr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1013460037541:android:349708912700e013",
+        "android_client_info": {
+          "package_name": "hajjhackathon.com.team_45"
         }
       },
       "oauth_client": [
@@ -62,7 +106,7 @@
           "client_id": "1013460037541-0j8t5a3vqagtqevg0brs75982liuk7lq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "hajjhackathon.com.team.safehajj",
+            "package_name": "hajjhackathon.com.team_45",
             "certificate_hash": "e3244a76ddaf4ba1fe53615663bc8139e599c12e"
           }
         },

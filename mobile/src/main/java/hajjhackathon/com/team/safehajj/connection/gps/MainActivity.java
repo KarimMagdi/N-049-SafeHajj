@@ -10,6 +10,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
 public class MainActivity extends Activity {
 
     private static final int PERMISSIONS_REQUEST = 100;
@@ -36,6 +38,7 @@ public class MainActivity extends Activity {
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST);
         }
+        FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
     }
 
     @Override
