@@ -17,5 +17,9 @@
 <resources>
     <dimen name="tablet_list_width">300dp</dimen>
     <dimen name="phone_list_height">200dp</dimen>
-    
+    <dimen name="space_8dp">8dp</dimen>
+    <dimen name="joinCircleButtonPadding">10dp</dimen>
+    <dimen name="createCircleMarginBottom">8dp</dimen>
+    <dimen name="createCircleHeight">40dp</dimen>
+
 </resources>

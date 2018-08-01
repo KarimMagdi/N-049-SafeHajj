@@ -1,15 +1,31 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:padding="@dimen/space_8dp"
     android:layout_height="match_parent"
-    tools:context="hajjhackathon.com.team.safehajj.fragment.CreateOrJoinCircleFragment">
+    tools:context="hajjhackathon.com.team.safehajj.fragment.CreateOrJoinCircleFragment"
+    android:paddingBottom="@dimen/joinCircleButtonPadding">
 
-    <TextView
+    <Button
+        android:id="@+id/createCircle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        style="@style/Base.TextAppearance.AppCompat.Title"
+        android:background="@drawable/round_rect_primary"
+        android:layout_height="@dimen/createCircleHeight"
+        android:layout_above="@+id/joinCircleButton"
+        android:text="@string/create_circle"
         android:textColor="@color/colorPrimary"
-        android:textStyle="bold"
-        android:text="@string/app_name" />
+        android:layout_marginBottom="@dimen/createCircleMarginBottom"
+        android:textStyle="bold" />
 
-</FrameLayout>
+    <Button
+        android:id="@+id/joinCircleButton"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/createCircleHeight"
+        android:layout_alignParentBottom="true"
+        android:text="@string/join_circle"
+        android:background="@drawable/round_rect_primary"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold" />
+
+</RelativeLayout>
