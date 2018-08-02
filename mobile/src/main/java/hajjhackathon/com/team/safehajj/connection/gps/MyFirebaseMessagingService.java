@@ -1,4 +1,4 @@
-package hajjhackathon.com.team.gps;
+package hajjhackathon.com.team.safehajj.connection.gps;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -13,7 +13,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import hajjhackathon.com.team.safehajj.R;
-import hajjhackathon.com.team.safehajj.connection.gps.MainActivity;
+
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "FirebaseMessagingServce";

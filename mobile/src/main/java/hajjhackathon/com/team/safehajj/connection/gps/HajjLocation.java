@@ -5,11 +5,22 @@ import java.io.Serializable;
 public class HajjLocation implements Serializable {
 
     private boolean isAdmin;
+
+    public boolean isOut() {
+        return isOut;
+    }
+
+    public void setOut(boolean out) {
+        isOut = out;
+    }
+
+    private boolean isOut;
     private double altitude;
     private double latitude;
     private double longitude;
     private long time;
     private double verticalAccuracyMeters;
+
 
     public boolean isAdmin() {
         return isAdmin;

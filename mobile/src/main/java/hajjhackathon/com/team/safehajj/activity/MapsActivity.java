@@ -14,24 +14,26 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.List;
 
 
+import hajjhackathon.com.team.safehajj.AppConstants;
 import hajjhackathon.com.team.safehajj.R;
 import hajjhackathon.com.team.safehajj.connection.gps.DatabaseRepo;
 import hajjhackathon.com.team.safehajj.connection.gps.HajjLocation;
 import hajjhackathon.com.team.safehajj.connection.gps.IDataBaseRepo;
 import hajjhackathon.com.team.safehajj.connection.gps.TrackingService;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,IDataBaseRepo {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, IDataBaseRepo {
 
     private GoogleMap mMap;
     private static final int PERMISSIONS_REQUEST = 100;
-    private boolean fireBaseServiceStarted =  false;
+    private boolean fireBaseServiceStarted = false;
     private List<HajjLocation> allLocations;
 
     @Override
@@ -79,9 +81,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
 
-
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));ƒ
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[]
             grantResults) {
@@ -101,7 +103,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         startService(new Intent(this, TrackingService.class));
         //Notify the user that tracking has been enabled//
         Toast.makeText(this, "GPS tracking enabled", Toast.LENGTH_SHORT).show();
-        DatabaseRepo.getAllLocations(this);
+        DatabaseRepo.getAllLocations("",this);
 
 //        //Close MainActivity//
 //        finish();
@@ -112,19 +114,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void showAllLocations(List<HajjLocation> locations) {
         this.allLocations = locations;
         LatLng latLng = null;
-        for(int i =0;i<allLocations.size();i++) {
+        LatLng adminLatLng = null;
+
+        mMap.clear();
+        for (int i = 0; i < allLocations.size(); i++) {
             HajjLocation location = allLocations.get(i);
             latLng = new LatLng(location.getLatitude()
                     , location.getLongitude());
+            if (location.isAdmin()) {
+                adminLatLng = latLng;
+            }
 
-            mMap.addMarker(new MarkerOptions().position(latLng));
         }
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
-        // Zoom in, animating the camera. 
-        mMap.animateCamera(CameraUpdateFactory.zoomIn());
 
+
+        if (adminLatLng != null) {
+            drawSafeCircle(adminLatLng);
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(adminLatLng, 0));
+            // Zoom in, animating the camera.
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(adminLatLng, 0));
+        }
         // TODO: 8/2/18  handle rejection permissions
 
 
+    }
+
+    private void drawSafeCircle(LatLng centerPointLatLang) {
+        Circle circle = mMap.addCircle(new CircleOptions()
+                .center(centerPointLatLang)
+                .radius(AppConstants.Companion.getCIRCLE_RADUIS())
+                .strokeColor(ContextCompat.getColor(this, R.color.circleStrokeColor))
+                .fillColor(ContextCompat.getColor(this, R.color.circleColor)));
     }
 }

@@ -27,6 +27,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.util.UUID;
+
 import hajjhackathon.com.team.safehajj.R;
 
 
@@ -127,6 +129,7 @@ public class TrackingService extends Service {
                     hajjLocation.setLatitude(location.getLatitude());
                     hajjLocation.setLongitude(location.getLongitude());
                     hajjLocation.setTime(location.getTime());
+                    hajjLocation.setOut(false);
                     //hajjLocation.setVerticalAccuracyMeters(location.getVerticalAccuracyMeters());
                     if (location != null) {
                         //Save the location data to the database//
@@ -137,5 +140,11 @@ public class TrackingService extends Service {
                 }
             }, null);
         }
+
+
+    }
+
+    public static String getCircleID() {
+        return UUID.randomUUID().toString();
     }
 }

@@ -25,7 +25,7 @@ public class DatabaseRepo {
         }
     }
 
-    public static void getAllLocations(final IDataBaseRepo iDataBaseRepo) {
+    public static void getAllLocations(String circleId , final IDataBaseRepo iDataBaseRepo) {
         getInstance();
 
         mDatabase.addValueEventListener(new ValueEventListener() {
@@ -39,7 +39,7 @@ public class DatabaseRepo {
                         Map<String, Object> mapObj = (Map<String, Object>) obj;
                         HajjLocation hajjLocation = new HajjLocation();
                         hajjLocation.setAdmin((boolean) mapObj.get(ModelConstants.ADMIN));
-                        //hajjLocation.setLongitude((double) mapObj.get(ModelConstants.ALTITUDE));
+                        //hajjLocation.setLon11gitude((double) mapObj.get(ModelConstants.ALTITUDE));
                         hajjLocation.setLatitude((double) mapObj.get(ModelConstants.LATITUDE));
                         hajjLocation.setLongitude((double) mapObj.get(ModelConstants.LONGITUDE));
                         hajjLocation.setTime((long) mapObj.get(ModelConstants.TIME));
