@@ -26,4 +26,5 @@
     <string name="title_activity_maps">Map</string>
     <string name="join_circle">Join circle</string>
     <string name="create_circle">Create circle</string>
+    <string name="circle_id_sharedpreferences_key">circleIdKey</string>
 </resources>

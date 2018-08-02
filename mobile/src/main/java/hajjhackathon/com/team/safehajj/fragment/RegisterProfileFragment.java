@@ -1,11 +1,10 @@
 package hajjhackathon.com.team.safehajj.fragment;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +35,12 @@ public class RegisterProfileFragment extends Fragment {
     private EditText userIdEditText;
     private EditText userNameEditText;
     private Button signUpCircle;
+    private String deepLink;
+    private String circleId;
 
 
     private OnFragmentInteractionListener mListener;
+    private String circleName;
 
     public RegisterProfileFragment() {
         // Required empty public constructor
@@ -52,13 +54,24 @@ public class RegisterProfileFragment extends Fragment {
         return fragment;
     }
 
+    public void setDeepLink(String deepLink) {
+        this.deepLink = deepLink;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             isCreateCircle = getArguments().getBoolean(mIsCreateCircle);
-
         }
+        if (!isCreateCircle && deepLink != null) {
+            parseCircleId(deepLink);
+        }
+    }
+
+    private void parseCircleId(String deepLink) {
+        circleId = deepLink.substring(deepLink.lastIndexOf("/") + 1);
+
     }
 
     @Override
@@ -74,23 +87,37 @@ public class RegisterProfileFragment extends Fragment {
         circleIdNameEditText = view.findViewById(R.id.editText_CircleNameOrId);
         userIdEditText = view.findViewById(R.id.editText_userId);
         userNameEditText = view.findViewById(R.id.editText_userName);
+        if (circleId != null)
+            circleIdNameEditText.setText(circleId);
         signUpCircle = view.findViewById(R.id.btn_signUpCircle);
         signUpCircle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isCreateCircle) {
-                    TrackingService.getCircleID(true);
+                    String newCircleId = TrackingService.getCircleID(true);
+                    PreferenceManager.getDefaultSharedPreferences(getContext()).edit().
+                            putString(getString(R.string.circle_id_sharedpreferences_key),
+                                    newCircleId).apply();
+
+                    circleName = circleIdNameEditText.getText().toString();
+
                 } else {
                     TrackingService.getCircleID(false);
                     TrackingService.circleId = circleIdNameEditText.getText().toString();
+                    PreferenceManager.getDefaultSharedPreferences(getContext()).edit().
+                            putString(getString(R.string.circle_id_sharedpreferences_key),
+                                    TrackingService.circleId).apply();
+
+
                 }
-                AppNavigator.INSTANCE.goToMapsActivity(getActivity(), null);
+                AppNavigator.INSTANCE.goToMapsActivity(getActivity(), null, isCreateCircle,
+                        circleName);
+
             }
         });
         if (isCreateCircle) {
             circleIdNameEditText.setHint("Circle Name");
-        }
-        else
+        } else
             circleIdNameEditText.setHint("Circle Id");
 
     }
@@ -122,4 +149,6 @@ public class RegisterProfileFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 }

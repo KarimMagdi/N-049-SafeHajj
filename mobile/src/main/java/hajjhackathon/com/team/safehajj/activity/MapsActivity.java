@@ -4,30 +4,34 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.util.ArrayList;
 import java.util.List;
 
-
 import hajjhackathon.com.team.safehajj.AppConstants;
+import hajjhackathon.com.team.safehajj.AppNavigator;
+import hajjhackathon.com.team.safehajj.DistanceCalculator;
 import hajjhackathon.com.team.safehajj.R;
 import hajjhackathon.com.team.safehajj.connection.gps.DatabaseRepo;
 import hajjhackathon.com.team.safehajj.connection.gps.HajjLocation;
@@ -40,11 +44,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int PERMISSIONS_REQUEST = 100;
     private boolean fireBaseServiceStarted = false;
     private List<HajjLocation> allLocations;
+    private Button logOutButton;
+    private boolean isCreateCircle;
+    private static final String ISCREATECIRCLE = "isCreateCircle";
+    private static final String CIRCLENAME = "circleName";
+    private static final String DEEPLINKSCHEMA = "safehajj://circle/";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        getExtrasIntent(getIntent().getExtras());
+        logOutButton = findViewById(R.id.log_button);
+        logOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().remove(getString(R.string.circle_id_sharedpreferences_key));
+                AppNavigator.INSTANCE.goToAuthenticationActivity(MapsActivity.this, null);
+
+            }
+        });
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -69,8 +89,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
 
+
     }
 
+    private void getExtrasIntent(Bundle extras) {
+        if (extras.containsKey(ISCREATECIRCLE)) {
+            isCreateCircle = extras.getBoolean(ISCREATECIRCLE);
+            String circleName = null;
+            if (extras.containsKey(CIRCLENAME))
+                circleName = extras.getString(CIRCLENAME);
+            if (isCreateCircle) {
+                String deepLink = DEEPLINKSCHEMA + TrackingService.getCircleID(false)
+                        + "/" + circleName;
+                openShareDialog(deepLink);
+            }
+
+        }
+
+
+    }
+
+    private void openShareDialog(String deepLiniUrl) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, deepLiniUrl);
+        startActivity(Intent.createChooser(intent, "Share Your Circle"));
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -121,7 +165,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         startService(new Intent(this, TrackingService.class));
         //Notify the user that tracking has been enabled//
         Toast.makeText(this, "GPS tracking enabled", Toast.LENGTH_SHORT).show();
-        DatabaseRepo.getAllLocations("",this);
+        DatabaseRepo.getAllLocations("", this);
 
 //        //Close MainActivity//
 //        finish();
@@ -131,22 +175,46 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void showAllLocations(List<HajjLocation> locations) {
         this.allLocations = locations;
-        LatLng latLng = null;
+        LatLng currLatLng;
         LatLng adminLatLng = null;
-
+        HajjLocation adminHajjLocation = null;
+        List<HajjLocation> oddLocations = new ArrayList<>();
         mMap.clear();
-        for (int i = 0; i < allLocations.size(); i++) {
-            HajjLocation location = allLocations.get(i);
-            latLng = new LatLng(location.getLatitude()
-                    , location.getLongitude());
-            mMap.addMarker(new MarkerOptions()
-                    .position(latLng));
-            if (location.isAdmin()) {
-                adminLatLng = latLng;
+        //region get admin object
+        for (int j = 0; j < allLocations.size(); j++) {
+            if (allLocations.get(j).isAdmin()) {
+                adminHajjLocation = allLocations.get(j);
+                break;
             }
-
         }
+        //endregion
 
+
+        for (int i = 0; i < allLocations.size(); i++) {
+            HajjLocation currHajjLocation = allLocations.get(i);
+            currLatLng = new LatLng(currHajjLocation.getLatitude()
+                    , currHajjLocation.getLongitude());
+            mMap.addMarker(new MarkerOptions()
+                    .position(currLatLng));
+            if (currHajjLocation.isAdmin()) {
+                adminLatLng = currLatLng;
+            }
+            if (adminHajjLocation != null && !currHajjLocation.isAdmin()) {
+                double distanceBetweenPointsAndAdmin = DistanceCalculator.getInstance().greatCircleInMeters(currLatLng,
+                        adminLatLng);
+                Toast.makeText(this, "distanceBetweenPoints = " + distanceBetweenPointsAndAdmin, Toast.LENGTH_LONG).show();
+                //region check for distance
+                if (distanceBetweenPointsAndAdmin > 100) {
+                    Toast.makeText(this, "distance > 100", Toast.LENGTH_LONG).show();
+                    HajjLocation oddHajjLocation = new HajjLocation();
+                    oddHajjLocation.setLatitude(currLatLng.latitude);
+                    oddHajjLocation.setLongitude(currLatLng.longitude);
+                    oddLocations.add(oddHajjLocation);
+                }
+                //endregion
+
+            }
+        }
 
         if (adminLatLng != null) {
             drawSafeCircle(adminLatLng);
@@ -155,8 +223,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(adminLatLng, 12.0f));
         }
         // TODO: 8/2/18  handle rejection permissions
-
-
     }
 
     private void drawSafeCircle(LatLng centerPointLatLang) {
@@ -166,4 +232,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .strokeColor(ContextCompat.getColor(this, R.color.circleStrokeColor))
                 .fillColor(ContextCompat.getColor(this, R.color.circleColor)));
     }
+
+    private List<HajjLocation> getStaticLocations() {
+        List<HajjLocation> locationArrayList = new ArrayList<>();
+        HajjLocation location1 = new HajjLocation();
+        location1.setLatitude(21.7622922);
+        location1.setLongitude(39.1643439);
+        location1.setAdmin(true);
+
+        HajjLocation location2 = new HajjLocation();
+        location2.setLatitude(21.7537872);
+        location2.setLongitude(39.1590548);
+
+        locationArrayList.add(location1);
+        locationArrayList.add(location2);
+
+        return locationArrayList;
+    }
+
+
 }
