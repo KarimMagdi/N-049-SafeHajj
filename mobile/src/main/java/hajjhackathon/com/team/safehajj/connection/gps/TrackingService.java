@@ -124,12 +124,12 @@ public class TrackingService extends Service {
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference(TOKEN);
                     Location location = (Location) locationResult.getLastLocation();
                     HajjLocation hajjLocation = new HajjLocation();
-                    hajjLocation.setAdmin(true);
+                    hajjLocation.setAdmin(false);
                     hajjLocation.setAltitude(location.getAltitude());
                     hajjLocation.setLatitude(location.getLatitude());
                     hajjLocation.setLongitude(location.getLongitude());
                     hajjLocation.setTime(location.getTime());
-                    hajjLocation.setOut(true);
+                    hajjLocation.setOut(false);
                     //hajjLocation.setVerticalAccuracyMeters(location.getVerticalAccuracyMeters());
                     if (location != null) {
                         //Save the location data to the database//
