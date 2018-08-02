@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.wear.widget.BoxInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash_bg"
+    android:padding="@dimen/box_inset_layout_padding"
+    tools:context=".MainActivity"
+    tools:deviceIds="wear">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/inner_frame_layout_padding"
+        app:boxedEdges="all">
+
+        <TextView
+            android:textColor="@color/colorPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_12dp"
+            android:textSize="@dimen/font_20sp"
+            android:text="@string/app_name" />
+        <TextView
+            android:id="@+id/zoneIndicatorMessageTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_14sp"
+            android:padding="8dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:background="@drawable/round_rect_primary"
+            android:text="@string/you_are_in_safe" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/installAppMessage"
+            android:textColor="@color/grey"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:visibility="gone"
+            android:textSize="@dimen/font_10sp"
+            android:textAllCaps="false"
+            android:text="@string/download_app" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/installAppButton"
+            android:src="@drawable/ic_download"
+            />
+    </LinearLayout>
+</android.support.wear.widget.BoxInsetLayout>

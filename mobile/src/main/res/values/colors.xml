@@ -3,7 +3,7 @@
     <color name="status_bar_color">#2aaa82</color>
     <color name="layout_border_color">#1f7321</color>
     <color name="colorPrimary">#2aaa82</color>
-    <color name="colorPrimaryDark">#1a6b51</color>
+    <color name="colorPrimaryDark">#107956</color>
     <color name="colorAccent">#FF111111</color>
     <color name="transparent">#00000000</color>
     <color name="circleStrokeColor">#1a6b51</color>
@@ -12,6 +12,7 @@
 
     <color name="green">#2aaa82</color>
     <color name="white">#ffffff</color>
+    <color name="white2">#bbffffff</color>
     <color name="dark_grey">#161f2c</color>
     <color name="grey">#c8d1de</color>
     <color name="grey2">#a8aaac</color>
