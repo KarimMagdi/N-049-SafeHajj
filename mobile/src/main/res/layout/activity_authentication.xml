@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:id="@+id/authContainer"
     android:layout_height="match_parent"
+    android:background="@color/green"
     tools:context="hajjhackathon.com.team.safehajj.activity.AuthenticationActivity">
 
 </android.support.constraint.ConstraintLayout>
