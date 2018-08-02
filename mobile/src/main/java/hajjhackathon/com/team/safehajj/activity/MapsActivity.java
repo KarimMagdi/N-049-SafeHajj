@@ -160,10 +160,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (adminHajjLocation != null && !currHajjLocation.isAdmin()) {
                 double distanceBetweenPointsAndAdmin = DistanceCalculator.getInstance().greatCircleInMeters(currLatLng,
                         adminLatLng);
-                Toast.makeText(this, "distanceBetweenPoints = " + distanceBetweenPointsAndAdmin, Toast.LENGTH_LONG);
+                Toast.makeText(this, "distanceBetweenPoints = " + distanceBetweenPointsAndAdmin, Toast.LENGTH_LONG).show();
                 //region check for distance
                 if (distanceBetweenPointsAndAdmin > 100) {
-                    Toast.makeText(this, "distance <10", Toast.LENGTH_LONG);
+                    Toast.makeText(this, "distance <10", Toast.LENGTH_LONG).show();
                     HajjLocation oddHajjLocation = new HajjLocation();
                     oddHajjLocation.setLatitude(currLatLng.latitude);
                     oddHajjLocation.setLongitude(currLatLng.longitude);
@@ -191,15 +191,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .fillColor(ContextCompat.getColor(this, R.color.circleColor)));
     }
 
-    private List<HajjLocation> getLocations() {
+    private List<HajjLocation> getStaticLocations() {
         List<HajjLocation> locationArrayList = new ArrayList<>();
         HajjLocation location1 = new HajjLocation();
         location1.setLatitude(21.7622922);
         location1.setLongitude(39.1643439);
+        location1.setAdmin(true);
 
         HajjLocation location2 = new HajjLocation();
-        location2.setLatitude(21.7622922);
-        location2.setLongitude(39.1643439);
+        location2.setLatitude(21.7537872);
+        location2.setLongitude(39.1590548);
 
         locationArrayList.add(location1);
         locationArrayList.add(location2);
