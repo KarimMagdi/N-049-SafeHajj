@@ -3,6 +3,7 @@ package hajjhackathon.com.team.safehajj.activity
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.preference.PreferenceManager
 import hajjhackathon.com.team.safehajj.R
 import hajjhackathon.com.team.safehajj.AppConstants
 import hajjhackathon.com.team.safehajj.AppNavigator
@@ -30,8 +31,12 @@ class SplashActivity : AppCompatActivity() {
 
     private fun afterSplashAction() {
        var userName =  SharedPreferenceUtil.getStringPreference(this, AppConstants.USER_NAME_KEY)
-        when (TrackingService.circleId != null) {
+        var currentCircleId=PreferenceManager.getDefaultSharedPreferences(this).getString(getString(R.string.circle_id_sharedpreferences_key),
+                TrackingService.circleId)
+        when (currentCircleId!= null) {
+
              true -> {
+                 TrackingService.circleId=currentCircleId
                  AppNavigator.goToMapsActivity(this,deeplLinkUri)
              }
 

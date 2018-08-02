@@ -1,9 +1,11 @@
 package hajjhackathon.com.team.safehajj.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -11,6 +13,8 @@ import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -29,6 +33,7 @@ import java.util.List;
 
 
 import hajjhackathon.com.team.safehajj.AppConstants;
+import hajjhackathon.com.team.safehajj.AppNavigator;
 import hajjhackathon.com.team.safehajj.DistanceCalculator;
 import hajjhackathon.com.team.safehajj.R;
 import hajjhackathon.com.team.safehajj.connection.gps.DatabaseRepo;
@@ -42,11 +47,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int PERMISSIONS_REQUEST = 100;
     private boolean fireBaseServiceStarted = false;
     private List<HajjLocation> allLocations;
+    private Button logOutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        logOutButton=findViewById(R.id.log_button);
+        logOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().remove(getString(R.string.circle_id_sharedpreferences_key));
+                AppNavigator.INSTANCE.goToAuthenticationActivity( MapsActivity.this,null);
+
+            }
+        });
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -70,6 +85,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     PERMISSIONS_REQUEST);
         }
         FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
+
 
     }
 
@@ -123,7 +139,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         startService(new Intent(this, TrackingService.class));
         //Notify the user that tracking has been enabled//
         Toast.makeText(this, "GPS tracking enabled", Toast.LENGTH_SHORT).show();
-        DatabaseRepo.getAllLocations("", this);
+        DatabaseRepo.getAllLocations("",this);
 
 //        //Close MainActivity//
 //        finish();
