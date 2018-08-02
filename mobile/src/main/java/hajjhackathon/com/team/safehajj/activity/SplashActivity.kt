@@ -39,7 +39,6 @@ class SplashActivity : AppCompatActivity() {
                 TrackingService.circleId = currentCircleId
                 AppNavigator.goToMapsActivity(this, deeplLinkUri, false,"")
             }
-
             false -> {
                 AppNavigator.goToAuthenticationActivity(this, deeplLinkUri)
 
