@@ -40,6 +40,7 @@ public class RegisterProfileFragment extends Fragment {
 
 
     private OnFragmentInteractionListener mListener;
+    private String circleName;
 
     public RegisterProfileFragment() {
         // Required empty public constructor
@@ -98,6 +99,7 @@ public class RegisterProfileFragment extends Fragment {
                             putString(getString(R.string.circle_id_sharedpreferences_key),
                                     newCircleId).apply();
 
+                    circleName = circleIdNameEditText.getText().toString();
 
                 } else {
                     TrackingService.getCircleID(false);
@@ -108,7 +110,8 @@ public class RegisterProfileFragment extends Fragment {
 
 
                 }
-                AppNavigator.INSTANCE.goToMapsActivity(getActivity(), null, isCreateCircle);
+                AppNavigator.INSTANCE.goToMapsActivity(getActivity(), null, isCreateCircle,
+                        circleName);
 
             }
         });

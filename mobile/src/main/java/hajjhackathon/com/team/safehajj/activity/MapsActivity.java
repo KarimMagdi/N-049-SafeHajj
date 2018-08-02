@@ -47,6 +47,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button logOutButton;
     private boolean isCreateCircle;
     private static final String ISCREATECIRCLE = "isCreateCircle";
+    private static final String CIRCLENAME = "circleName";
     private static final String DEEPLINKSCHEMA = "safehajj://circle/";
 
 
@@ -94,8 +95,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void getExtrasIntent(Bundle extras) {
         if (extras.containsKey(ISCREATECIRCLE)) {
             isCreateCircle = extras.getBoolean(ISCREATECIRCLE);
+            String circleName = null;
+            if (extras.containsKey(CIRCLENAME))
+                circleName = extras.getString(CIRCLENAME);
             if (isCreateCircle) {
-                String deepLink = DEEPLINKSCHEMA + TrackingService.getCircleID(false);
+                String deepLink = DEEPLINKSCHEMA + TrackingService.getCircleID(false)
+                        + "/" + circleName;
                 openShareDialog(deepLink);
             }
 

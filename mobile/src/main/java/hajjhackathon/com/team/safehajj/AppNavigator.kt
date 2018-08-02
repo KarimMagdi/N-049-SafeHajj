@@ -16,6 +16,7 @@ object AppNavigator {
 
     val DEEP_LINK_URI: String = "deeplink_uri"
     val ISCREATECIRCLE = "isCreateCircle";
+    val CIRCLENAME = "circleName"
 
 
     fun goToAuthenticationActivity(activity: Activity, deepLinkUri: String?) {
@@ -30,9 +31,11 @@ object AppNavigator {
     /**
      * Navigate to main activity application entry point after splash
      */
-    fun goToMapsActivity(activity: Activity, deepLinkUri: String? = null, isCreateCircle: Boolean) {
+    fun goToMapsActivity(activity: Activity, deepLinkUri: String? = null,
+                         isCreateCircle: Boolean, circleName: String) {
         val intent = Intent(activity, MapsActivity::class.java)
         intent.putExtra(ISCREATECIRCLE, isCreateCircle)
+        intent.putExtra(CIRCLENAME, circleName);
         deepLinkUri?.let {
             intent.putExtra(DEEP_LINK_URI, it)
         }
