@@ -121,20 +121,23 @@ public class TrackingService extends Service {
                 @Override
                 public void onLocationResult(LocationResult locationResult) {
                     //Get a reference to the database, so your app can perform read and write operations//
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference(circleId + "/" + TOKEN);
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + circleId + "/" + TOKEN + "/location");
                     Location location = (Location) locationResult.getLastLocation();
                     HajjLocation hajjLocation = new HajjLocation();
-                    hajjLocation.setAdmin(true);
+                    hajjLocation.setAdmin(false);
                     hajjLocation.setAltitude(location.getAltitude());
                     hajjLocation.setLatitude(location.getLatitude());
                     hajjLocation.setLongitude(location.getLongitude());
                     hajjLocation.setTime(location.getTime());
                     hajjLocation.setOut(false);
+                    hajjLocation.setToken(TOKEN);
                     //hajjLocation.setVerticalAccuracyMeters(location.getVerticalAccuracyMeters());
                     if (location != null) {
                         //Save the location data to the database//
                         Log.d(TAG, "Firebase Location " + hajjLocation);
                         ref.setValue(hajjLocation);
+                        if (true)
+                            setUserIsOut(hajjLocation);
                         //Log.d(TAG, "Firebase Locations: " + DatabaseRepo.getAllLocations("",this));
                     }
                 }
@@ -152,5 +155,10 @@ public class TrackingService extends Service {
                 circleId = UUID.randomUUID().toString();
         }
         return circleId;
+    }
+
+    public void setUserIsOut(HajjLocation userIsOut) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("outuser/user");
+        ref.setValue(userIsOut);
     }
 }

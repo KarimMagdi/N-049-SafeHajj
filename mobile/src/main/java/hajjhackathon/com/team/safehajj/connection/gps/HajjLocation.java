@@ -20,7 +20,15 @@ public class HajjLocation implements Serializable {
     private double longitude;
     private long time;
     private double verticalAccuracyMeters;
+    private String token;
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public boolean isAdmin() {
         return isAdmin;
