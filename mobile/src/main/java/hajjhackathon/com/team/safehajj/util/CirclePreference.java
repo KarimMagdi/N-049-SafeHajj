@@ -11,7 +11,7 @@ import android.content.SharedPreferences;
 public class CirclePreference {
 
     private static CirclePreference circlePreference;
-    private static SharedPreferences sharedPreferences;
+    private static SharedPreferenceUtil sharedPreferences;
     private static SharedPreferences.Editor editor;
     private static final String SHAREDNAMECIRCLE = "circleData";
     private static final String CIRCLENAMEPREF = "circleName";
@@ -19,8 +19,7 @@ public class CirclePreference {
 
     private CirclePreference() {
 
-        sharedPreferences = activity.getSharedPreferences(SHAREDNAMECIRCLE, Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
+        sharedPreferences = SharedPreferenceUtil.INSTANCE;
     }
 
     public static CirclePreference newInstance(Activity activity1) {
@@ -31,12 +30,12 @@ public class CirclePreference {
     }
 
     public void setCircleName(String circleName) {
-        editor.putString(CIRCLENAMEPREF, circleName);
-        editor.commit();
+        sharedPreferences.setStringPreference(activity,CIRCLENAMEPREF,circleName);
     }
 
     public String getCircleName() {
-        return sharedPreferences.getString(CIRCLENAMEPREF, "");
+        return (sharedPreferences.getStringPreference(activity,CIRCLENAMEPREF) != null) ?
+                sharedPreferences.getStringPreference(activity,CIRCLENAMEPREF):"";
     }
 
 }

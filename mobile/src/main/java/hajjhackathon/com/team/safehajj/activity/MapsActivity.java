@@ -40,6 +40,7 @@ import hajjhackathon.com.team.safehajj.connection.gps.HajjLocation;
 import hajjhackathon.com.team.safehajj.connection.gps.IDataBaseRepo;
 import hajjhackathon.com.team.safehajj.connection.gps.TrackingService;
 import hajjhackathon.com.team.safehajj.util.CirclePreference;
+import hajjhackathon.com.team.safehajj.util.SharedPreferenceUtil;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, IDataBaseRepo {
 
@@ -52,7 +53,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final String ISCREATECIRCLE = "isCreateCircle";
     private static final String CIRCLENAME = "circleName";
     private static final String DEEPLINKSCHEMA = "safehajj://circle/";
-    private SharedPreferences circleData;
     private static final String CIRCLENAMEPREF = "circleName";
 
     @Override
@@ -64,7 +64,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().remove(getString(R.string.circle_id_sharedpreferences_key));
+
+                SharedPreferenceUtil.INSTANCE.remove(MapsActivity.this ,getString(R.string.circle_id_sharedpreferences_key));
                 AppNavigator.INSTANCE.goToAuthenticationActivity(MapsActivity.this, null);
 
             }
@@ -262,9 +263,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     private void saveCircleData(String circleName) {
-        circleData = getSharedPreferences("circleData", MODE_PRIVATE);
-        SharedPreferences.Editor editor = circleData.edit();
-        editor.putString("CIRCLENAMEPREF", circleName);
-        editor.commit();
+
+        SharedPreferenceUtil.INSTANCE.setStringPreference(this,"CIRCLENAMEPREF",circleName);
+
     }
 }
