@@ -1,6 +1,5 @@
 package hajjhackathon.com.team.safehajj.fragment;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -36,6 +35,8 @@ public class RegisterProfileFragment extends Fragment {
     private EditText userIdEditText;
     private EditText userNameEditText;
     private Button signUpCircle;
+    private String deepLink;
+    private String circleId;
 
 
     private OnFragmentInteractionListener mListener;
@@ -52,13 +53,24 @@ public class RegisterProfileFragment extends Fragment {
         return fragment;
     }
 
+    public void setDeepLink(String deepLink) {
+        this.deepLink = deepLink;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             isCreateCircle = getArguments().getBoolean(mIsCreateCircle);
-
         }
+        if (!isCreateCircle && deepLink != null) {
+            parseCircleId(deepLink);
+        }
+    }
+
+    private void parseCircleId(String deepLink) {
+        circleId = deepLink.substring(deepLink.lastIndexOf("/"));
+
     }
 
     @Override
@@ -74,6 +86,8 @@ public class RegisterProfileFragment extends Fragment {
         circleIdNameEditText = view.findViewById(R.id.editText_CircleNameOrId);
         userIdEditText = view.findViewById(R.id.editText_userId);
         userNameEditText = view.findViewById(R.id.editText_userName);
+        if (circleId != null)
+            circleIdNameEditText.setText(circleId);
         signUpCircle = view.findViewById(R.id.btn_signUpCircle);
         signUpCircle.setOnClickListener(new View.OnClickListener() {
             @Override
