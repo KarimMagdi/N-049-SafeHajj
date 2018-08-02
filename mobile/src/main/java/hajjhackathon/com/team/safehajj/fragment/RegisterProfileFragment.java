@@ -69,7 +69,7 @@ public class RegisterProfileFragment extends Fragment {
     }
 
     private void parseCircleId(String deepLink) {
-        circleId = deepLink.substring(deepLink.lastIndexOf("/"));
+        circleId = deepLink.substring(deepLink.lastIndexOf("/") + 1);
 
     }
 
