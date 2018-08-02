@@ -23,7 +23,8 @@ object AppNavigator{
             intent.putExtra(DEEP_LINK_URI,it)
         }
         activity.startActivity(intent)
-        activity.finish()    }
+        activity.finish()
+    }
 
     /**
      * Navigate to main activity application entry point after splash

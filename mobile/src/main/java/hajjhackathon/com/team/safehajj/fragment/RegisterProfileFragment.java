@@ -1,11 +1,10 @@
 package hajjhackathon.com.team.safehajj.fragment;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,18 +78,27 @@ public class RegisterProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (isCreateCircle) {
-                    TrackingService.getCircleID(true);
+                    String newCircleId = TrackingService.getCircleID(true);
+                    PreferenceManager.getDefaultSharedPreferences(getContext()).edit().
+                            putString(getString(R.string.circle_id_sharedpreferences_key),
+                                    newCircleId).apply();
+
+
                 } else {
                     TrackingService.getCircleID(false);
                     TrackingService.circleId = circleIdNameEditText.getText().toString();
+                    PreferenceManager.getDefaultSharedPreferences(getContext()).edit().
+                            putString(getString(R.string.circle_id_sharedpreferences_key),
+                                    TrackingService.circleId).apply();
+
+
                 }
                 AppNavigator.INSTANCE.goToMapsActivity(getActivity(), null);
             }
         });
         if (isCreateCircle) {
             circleIdNameEditText.setHint("Circle Name");
-        }
-        else
+        } else
             circleIdNameEditText.setHint("Circle Id");
 
     }
