@@ -35,7 +35,7 @@ object AppNavigator {
                          isCreateCircle: Boolean, circleName: String) {
         val intent = Intent(activity, MapsActivity::class.java)
         intent.putExtra(ISCREATECIRCLE, isCreateCircle)
-        intent.putExtra(CIRCLENAME, circleName);
+        intent.putExtra(CIRCLENAME, circleName)
         deepLinkUri?.let {
             intent.putExtra(DEEP_LINK_URI, it)
         }
