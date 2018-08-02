@@ -30,8 +30,11 @@ public class DatabaseRepo {
         mDatabase.child(TrackingService.circleId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 Map<String, Object> objectMap = (HashMap<String, Object>)
                         dataSnapshot.getValue();
+                if (objectMap == null)
+                    return;
                 locationList.clear();
                 for (Object obj : objectMap.values()) {
                     if (obj instanceof Map) {
