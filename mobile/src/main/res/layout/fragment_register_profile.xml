@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
+    android:background="@color/white"
     tools:context="hajjhackathon.com.team.safehajj.fragment.RegisterProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -36,9 +37,12 @@
 
 
     <Button
+        android:textAllCaps="false"
+        android:background="@color/green"
+        android:textColor="@color/white"
         android:layout_marginTop="7dp"
         android:layout_marginBottom="10dp"
-        android:id="@+id/btn_joinCircle"
+        android:id="@+id/btn_signUpCircle"
         android:text="Create"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
