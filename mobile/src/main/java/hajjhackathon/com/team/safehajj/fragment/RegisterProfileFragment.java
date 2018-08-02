@@ -118,9 +118,10 @@ public class RegisterProfileFragment extends Fragment {
             }
         });
         if (isCreateCircle) {
-            circleIdNameEditText.setHint("Circle Name");
+
+            signUpCircle.setText(getString(R.string.create));
         } else
-            circleIdNameEditText.setHint("Circle Id");
+            signUpCircle.setText(getString(R.string.join));
 
     }
 

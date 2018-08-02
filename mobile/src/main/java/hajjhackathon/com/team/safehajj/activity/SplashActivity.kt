@@ -44,7 +44,6 @@ class SplashActivity : AppCompatActivity() {
 
             }
         }
-//        AppNavigator.goToMapsActivity(this,deeplLinkUri)
     }
 
 }
