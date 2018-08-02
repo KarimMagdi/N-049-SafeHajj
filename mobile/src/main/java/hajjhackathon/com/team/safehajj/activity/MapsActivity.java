@@ -1,14 +1,13 @@
 package hajjhackathon.com.team.safehajj.activity;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,7 +20,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -30,7 +28,6 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 import hajjhackathon.com.team.safehajj.AppConstants;
 import hajjhackathon.com.team.safehajj.AppNavigator;
@@ -48,17 +45,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private boolean fireBaseServiceStarted = false;
     private List<HajjLocation> allLocations;
     private Button logOutButton;
+    private boolean isCreateCircle;
+    private static final String ISCREATECIRCLE = "isCreateCircle";
+    private static final String CIRCLENAME = "circleName";
+    private static final String DEEPLINKSCHEMA = "safehajj://circle/";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        logOutButton=findViewById(R.id.log_button);
+        getExtrasIntent(getIntent().getExtras());
+        logOutButton = findViewById(R.id.log_button);
         logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().remove(getString(R.string.circle_id_sharedpreferences_key));
-                AppNavigator.INSTANCE.goToAuthenticationActivity( MapsActivity.this,null);
+                AppNavigator.INSTANCE.goToAuthenticationActivity(MapsActivity.this, null);
 
             }
         });
@@ -89,6 +92,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    private void getExtrasIntent(Bundle extras) {
+        if (extras.containsKey(ISCREATECIRCLE)) {
+            isCreateCircle = extras.getBoolean(ISCREATECIRCLE);
+            String circleName = null;
+            if (extras.containsKey(CIRCLENAME))
+                circleName = extras.getString(CIRCLENAME);
+            if (isCreateCircle) {
+                String deepLink = DEEPLINKSCHEMA + TrackingService.getCircleID(false)
+                        + "/" + circleName;
+                openShareDialog(deepLink);
+            }
+
+        }
+
+
+    }
+
+    private void openShareDialog(String deepLiniUrl) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, deepLiniUrl);
+        startActivity(Intent.createChooser(intent, "Share Your Circle"));
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -139,7 +165,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         startService(new Intent(this, TrackingService.class));
         //Notify the user that tracking has been enabled//
         Toast.makeText(this, "GPS tracking enabled", Toast.LENGTH_SHORT).show();
-        DatabaseRepo.getAllLocations("",this);
+        DatabaseRepo.getAllLocations("", this);
 
 //        //Close MainActivity//
 //        finish();
@@ -176,10 +202,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (adminHajjLocation != null && !currHajjLocation.isAdmin()) {
                 double distanceBetweenPointsAndAdmin = DistanceCalculator.getInstance().greatCircleInMeters(currLatLng,
                         adminLatLng);
-                Toast.makeText(this, "distanceBetweenPoints = " + distanceBetweenPointsAndAdmin, Toast.LENGTH_LONG);
+                Toast.makeText(this, "distanceBetweenPoints = " + distanceBetweenPointsAndAdmin, Toast.LENGTH_LONG).show();
                 //region check for distance
                 if (distanceBetweenPointsAndAdmin > 100) {
-                    Toast.makeText(this, "distance <10", Toast.LENGTH_LONG);
+                    Toast.makeText(this, "distance > 100", Toast.LENGTH_LONG).show();
                     HajjLocation oddHajjLocation = new HajjLocation();
                     oddHajjLocation.setLatitude(currLatLng.latitude);
                     oddHajjLocation.setLongitude(currLatLng.longitude);
@@ -207,20 +233,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .fillColor(ContextCompat.getColor(this, R.color.circleColor)));
     }
 
-    private List<HajjLocation> getLocations() {
+    private List<HajjLocation> getStaticLocations() {
         List<HajjLocation> locationArrayList = new ArrayList<>();
         HajjLocation location1 = new HajjLocation();
         location1.setLatitude(21.7622922);
         location1.setLongitude(39.1643439);
+        location1.setAdmin(true);
 
         HajjLocation location2 = new HajjLocation();
-        location2.setLatitude(21.7622922);
-        location2.setLongitude(39.1643439);
+        location2.setLatitude(21.7537872);
+        location2.setLongitude(39.1590548);
 
         locationArrayList.add(location1);
         locationArrayList.add(location2);
 
         return locationArrayList;
     }
+
 
 }

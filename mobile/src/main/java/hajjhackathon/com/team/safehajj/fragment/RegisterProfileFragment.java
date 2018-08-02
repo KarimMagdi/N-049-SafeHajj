@@ -35,9 +35,12 @@ public class RegisterProfileFragment extends Fragment {
     private EditText userIdEditText;
     private EditText userNameEditText;
     private Button signUpCircle;
+    private String deepLink;
+    private String circleId;
 
 
     private OnFragmentInteractionListener mListener;
+    private String circleName;
 
     public RegisterProfileFragment() {
         // Required empty public constructor
@@ -51,13 +54,24 @@ public class RegisterProfileFragment extends Fragment {
         return fragment;
     }
 
+    public void setDeepLink(String deepLink) {
+        this.deepLink = deepLink;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             isCreateCircle = getArguments().getBoolean(mIsCreateCircle);
-
         }
+        if (!isCreateCircle && deepLink != null) {
+            parseCircleId(deepLink);
+        }
+    }
+
+    private void parseCircleId(String deepLink) {
+        circleId = deepLink.substring(deepLink.lastIndexOf("/") + 1);
+
     }
 
     @Override
@@ -73,6 +87,8 @@ public class RegisterProfileFragment extends Fragment {
         circleIdNameEditText = view.findViewById(R.id.editText_CircleNameOrId);
         userIdEditText = view.findViewById(R.id.editText_userId);
         userNameEditText = view.findViewById(R.id.editText_userName);
+        if (circleId != null)
+            circleIdNameEditText.setText(circleId);
         signUpCircle = view.findViewById(R.id.btn_signUpCircle);
         signUpCircle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +99,7 @@ public class RegisterProfileFragment extends Fragment {
                             putString(getString(R.string.circle_id_sharedpreferences_key),
                                     newCircleId).apply();
 
+                    circleName = circleIdNameEditText.getText().toString();
 
                 } else {
                     TrackingService.getCircleID(false);
@@ -93,7 +110,9 @@ public class RegisterProfileFragment extends Fragment {
 
 
                 }
-                AppNavigator.INSTANCE.goToMapsActivity(getActivity(), null);
+                AppNavigator.INSTANCE.goToMapsActivity(getActivity(), null, isCreateCircle,
+                        circleName);
+
             }
         });
         if (isCreateCircle) {
@@ -130,4 +149,6 @@ public class RegisterProfileFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 }

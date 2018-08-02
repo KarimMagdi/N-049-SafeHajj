@@ -51,7 +51,7 @@
         <category android:name="android.intent.category.BROWSABLE" />
 
         <data
-        android:host="circle/"
+        android:host="circle"
         android:scheme="safehajj" />
         </intent-filter>
         </activity>
