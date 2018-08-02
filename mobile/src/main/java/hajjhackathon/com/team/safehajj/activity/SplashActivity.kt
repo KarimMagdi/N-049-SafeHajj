@@ -11,7 +11,7 @@ import hajjhackathon.com.team.safehajj.util.SharedPreferenceUtil
 
 class SplashActivity : AppCompatActivity() {
 
-    val SPLASH_SCREEN_DELAY_TIME  = 3000L
+    val SPLASH_SCREEN_DELAY_TIME  = 2000L
     var deeplLinkUri : String?  = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
