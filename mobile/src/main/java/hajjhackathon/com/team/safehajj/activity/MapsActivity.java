@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -92,6 +93,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
 
+        ((TextView)findViewById(R.id.circleNameTextView)).setText(CirclePreference.newInstance(this).getCircleName());
 
     }
 

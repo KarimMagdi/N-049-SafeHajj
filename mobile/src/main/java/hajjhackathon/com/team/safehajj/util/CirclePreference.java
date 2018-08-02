@@ -15,7 +15,7 @@ public class CirclePreference {
     private static SharedPreferences.Editor editor;
     private static final String SHAREDNAMECIRCLE = "circleData";
     private static final String CIRCLENAMEPREF = "circleName";
-    private Activity activity;
+    private static Activity activity;
 
     private CirclePreference() {
 
@@ -23,15 +23,15 @@ public class CirclePreference {
         editor = sharedPreferences.edit();
     }
 
-    public static CirclePreference newInstance(Activity activity) {
-
+    public static CirclePreference newInstance(Activity activity1) {
+        activity = activity1;
         if (circlePreference == null)
             circlePreference = new CirclePreference();
         return circlePreference;
     }
 
-    public void setCircleName(String cicleName) {
-        editor.putString("", CIRCLENAMEPREF);
+    public void setCircleName(String circleName) {
+        editor.putString(CIRCLENAMEPREF, circleName);
         editor.commit();
     }
 
