@@ -47,7 +47,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button logOutButton;
     private boolean isCreateCircle;
     private static final String ISCREATECIRCLE = "isCreateCircle";
-    private static final String DEEPLINKSCHEMA = "schema://path/";
+    private static final String DEEPLINKSCHEMA = "safehajj://circle/";
 
 
     @Override
