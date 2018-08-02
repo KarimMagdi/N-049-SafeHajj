@@ -12,15 +12,16 @@ import hajjhackathon.com.team.safehajj.activity.AuthenticationActivity
 import hajjhackathon.com.team.safehajj.activity.MapsActivity
 
 
-object AppNavigator{
+object AppNavigator {
 
-     val DEEP_LINK_URI: String = "deeplink_uri"
+    val DEEP_LINK_URI: String = "deeplink_uri"
+    val ISCREATECIRCLE = "isCreateCircle";
 
 
     fun goToAuthenticationActivity(activity: Activity, deepLinkUri: String?) {
         val intent = Intent(activity, AuthenticationActivity::class.java)
         deepLinkUri?.let {
-            intent.putExtra(DEEP_LINK_URI,it)
+            intent.putExtra(DEEP_LINK_URI, it)
         }
         activity.startActivity(intent)
         activity.finish()
@@ -29,10 +30,11 @@ object AppNavigator{
     /**
      * Navigate to main activity application entry point after splash
      */
-    fun goToMapsActivity(activity: Activity , deepLinkUri : String? =  null) {
+    fun goToMapsActivity(activity: Activity, deepLinkUri: String? = null, isCreateCircle: Boolean) {
         val intent = Intent(activity, MapsActivity::class.java)
+        intent.putExtra(ISCREATECIRCLE, isCreateCircle)
         deepLinkUri?.let {
-            intent.putExtra(DEEP_LINK_URI,it)
+            intent.putExtra(DEEP_LINK_URI, it)
         }
         activity.startActivity(intent)
         activity.finish()
@@ -45,10 +47,10 @@ object AppNavigator{
         if (!isStacked) {
             activity.supportFragmentManager
                     .beginTransaction().replace(containerId,
-                            fragment).commit()
+                    fragment).commit()
         } else {
             activity.supportFragmentManager.beginTransaction().replace(containerId,
-                    fragment,fragment::class.java.name).addToBackStack(null).commit()
+                    fragment, fragment::class.java.name).addToBackStack(null).commit()
         }
     }
 

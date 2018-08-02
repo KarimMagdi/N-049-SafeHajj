@@ -1,5 +1,6 @@
 package hajjhackathon.com.team.safehajj.fragment;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -93,7 +94,8 @@ public class RegisterProfileFragment extends Fragment {
 
 
                 }
-                AppNavigator.INSTANCE.goToMapsActivity(getActivity(), null);
+                AppNavigator.INSTANCE.goToMapsActivity(getActivity(), null, isCreateCircle);
+
             }
         });
         if (isCreateCircle) {
@@ -130,4 +132,6 @@ public class RegisterProfileFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 }
