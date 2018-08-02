@@ -121,10 +121,10 @@ public class TrackingService extends Service {
                 @Override
                 public void onLocationResult(LocationResult locationResult) {
                     //Get a reference to the database, so your app can perform read and write operations//
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference(TOKEN);
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference(circleId + "/" + TOKEN);
                     Location location = (Location) locationResult.getLastLocation();
                     HajjLocation hajjLocation = new HajjLocation();
-                    hajjLocation.setAdmin(false);
+                    hajjLocation.setAdmin(true);
                     hajjLocation.setAltitude(location.getAltitude());
                     hajjLocation.setLatitude(location.getLatitude());
                     hajjLocation.setLongitude(location.getLongitude());
@@ -135,7 +135,7 @@ public class TrackingService extends Service {
                         //Save the location data to the database//
                         Log.d(TAG, "Firebase Location " + hajjLocation);
                         ref.setValue(hajjLocation);
-                       //Log.d(TAG, "Firebase Locations: " + DatabaseRepo.getAllLocations(this).size());
+                        //Log.d(TAG, "Firebase Locations: " + DatabaseRepo.getAllLocations("",this));
                     }
                 }
             }, null);
@@ -144,7 +144,13 @@ public class TrackingService extends Service {
 
     }
 
-    public static String getCircleID() {
-        return UUID.randomUUID().toString();
+    public static String getCircleID(boolean isNew) {
+        if (isNew) {
+            circleId = UUID.randomUUID().toString();
+        } else {
+            if (circleId == null)
+                circleId = UUID.randomUUID().toString();
+        }
+        return circleId;
     }
 }

@@ -8,15 +8,20 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.List;
@@ -66,6 +71,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_items, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        TrackingService.circleId = null;
+        return true;
+    }
 
     /**
      * Manipulates the map once available.
@@ -121,6 +139,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             HajjLocation location = allLocations.get(i);
             latLng = new LatLng(location.getLatitude()
                     , location.getLongitude());
+            mMap.addMarker(new MarkerOptions()
+                    .position(latLng));
             if (location.isAdmin()) {
                 adminLatLng = latLng;
             }
@@ -130,9 +150,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if (adminLatLng != null) {
             drawSafeCircle(adminLatLng);
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(adminLatLng, 0));
+            //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(adminLatLng, 12.0f));
             // Zoom in, animating the camera.
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(adminLatLng, 0));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(adminLatLng, 12.0f));
         }
         // TODO: 8/2/18  handle rejection permissions
 
