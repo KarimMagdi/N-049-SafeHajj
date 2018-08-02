@@ -163,7 +163,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Toast.makeText(this, "distanceBetweenPoints = " + distanceBetweenPointsAndAdmin, Toast.LENGTH_LONG).show();
                 //region check for distance
                 if (distanceBetweenPointsAndAdmin > 100) {
-                    Toast.makeText(this, "distance <10", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "distance > 100", Toast.LENGTH_LONG).show();
                     HajjLocation oddHajjLocation = new HajjLocation();
                     oddHajjLocation.setLatitude(currLatLng.latitude);
                     oddHajjLocation.setLongitude(currLatLng.longitude);
