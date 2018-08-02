@@ -2,6 +2,7 @@ package hajjhackathon.com.team.safehajj.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -37,6 +38,7 @@ import hajjhackathon.com.team.safehajj.connection.gps.DatabaseRepo;
 import hajjhackathon.com.team.safehajj.connection.gps.HajjLocation;
 import hajjhackathon.com.team.safehajj.connection.gps.IDataBaseRepo;
 import hajjhackathon.com.team.safehajj.connection.gps.TrackingService;
+import hajjhackathon.com.team.safehajj.util.CirclePreference;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, IDataBaseRepo {
 
@@ -49,7 +51,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final String ISCREATECIRCLE = "isCreateCircle";
     private static final String CIRCLENAME = "circleName";
     private static final String DEEPLINKSCHEMA = "safehajj://circle/";
-
+    private SharedPreferences circleData;
+    private static final String CIRCLENAMEPREF = "circleName";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +102,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (extras.containsKey(CIRCLENAME))
                 circleName = extras.getString(CIRCLENAME);
             if (isCreateCircle) {
+                if (circleName != null) {
+                    CirclePreference circlePreference =
+                            CirclePreference.newInstance(this);
+                    circlePreference.setCircleName(circleName);
+                }
                 String deepLink = DEEPLINKSCHEMA + TrackingService.getCircleID(false)
                         + "/" + circleName;
                 openShareDialog(deepLink);
@@ -251,4 +259,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
+    private void saveCircleData(String circleName) {
+        circleData = getSharedPreferences("circleData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = circleData.edit();
+        editor.putString("CIRCLENAMEPREF", circleName);
+        editor.commit();
+    }
 }

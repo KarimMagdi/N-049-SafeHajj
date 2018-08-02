@@ -14,6 +14,7 @@ import android.widget.EditText;
 import hajjhackathon.com.team.safehajj.AppNavigator;
 import hajjhackathon.com.team.safehajj.R;
 import hajjhackathon.com.team.safehajj.connection.gps.TrackingService;
+import hajjhackathon.com.team.safehajj.util.CirclePreference;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,9 +37,6 @@ public class RegisterProfileFragment extends Fragment {
     private EditText userNameEditText;
     private Button signUpCircle;
     private String deepLink;
-    private String circleId;
-
-
     private OnFragmentInteractionListener mListener;
     private String circleName;
 
@@ -65,12 +63,12 @@ public class RegisterProfileFragment extends Fragment {
             isCreateCircle = getArguments().getBoolean(mIsCreateCircle);
         }
         if (!isCreateCircle && deepLink != null) {
-            parseCircleId(deepLink);
+            parseCircleName(deepLink);
         }
     }
 
-    private void parseCircleId(String deepLink) {
-        circleId = deepLink.substring(deepLink.lastIndexOf("/") + 1);
+    private void parseCircleName(String deepLink) {
+        circleName = deepLink.substring(deepLink.lastIndexOf("/") + 1);
 
     }
 
@@ -87,8 +85,12 @@ public class RegisterProfileFragment extends Fragment {
         circleIdNameEditText = view.findViewById(R.id.editText_CircleNameOrId);
         userIdEditText = view.findViewById(R.id.editText_userId);
         userNameEditText = view.findViewById(R.id.editText_userName);
-        if (circleId != null)
-            circleIdNameEditText.setText(circleId);
+        if (circleName != null) {
+            CirclePreference circlePreference =
+                    CirclePreference.newInstance(getActivity());
+            circlePreference.setCircleName(circleName);
+            circleIdNameEditText.setText(circleName);
+        }
         signUpCircle = view.findViewById(R.id.btn_signUpCircle);
         signUpCircle.setOnClickListener(new View.OnClickListener() {
             @Override
