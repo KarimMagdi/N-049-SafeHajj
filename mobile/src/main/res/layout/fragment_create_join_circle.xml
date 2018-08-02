@@ -15,17 +15,6 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/logo" />
 
-    <TextView
-        android:id="@+id/textView_appName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/TextAppearance.AppCompat.Title"
-        android:layout_below="@+id/imgV_appIcon"
-        android:textColor="@color/colorPrimary"
-        android:layout_marginTop="@dimen/space_16dp"
-        android:layout_centerHorizontal="true"
-        android:text="@string/app_name" />
-
     <Button
         android:id="@+id/btn_createCircle"
         style="@style/styleButton"
