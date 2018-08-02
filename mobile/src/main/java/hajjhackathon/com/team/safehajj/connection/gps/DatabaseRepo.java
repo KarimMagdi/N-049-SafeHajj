@@ -27,8 +27,7 @@ public class DatabaseRepo {
 
     public static void getAllLocations(String circleId , final IDataBaseRepo iDataBaseRepo) {
         getInstance();
-
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        mDatabase.child(TrackingService.circleId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Map<String, Object> objectMap = (HashMap<String, Object>)
@@ -39,14 +38,15 @@ public class DatabaseRepo {
                         Map<String, Object> mapObj = (Map<String, Object>) obj;
                         HajjLocation hajjLocation = new HajjLocation();
                         hajjLocation.setAdmin((boolean) mapObj.get(ModelConstants.ADMIN));
-                        //hajjLocation.setLon11gitude((double) mapObj.get(ModelConstants.ALTITUDE));
+                        //hajjLocation.setLongitude((double) mapObj.get(ModelConstants.ALTITUDE));
                         hajjLocation.setLatitude((double) mapObj.get(ModelConstants.LATITUDE));
                         hajjLocation.setLongitude((double) mapObj.get(ModelConstants.LONGITUDE));
                         hajjLocation.setTime((long) mapObj.get(ModelConstants.TIME));
-                        //hajjLocation.setVerticalAccuracyMeters((double) mapObj.get(ModelConstants.VERTICALACCURACYMETERS));
+//                        hajjLocation.setVerticalAccuracyMeters((double) mapObj.get(ModelConstants.VERTICALACCURACYMETERS));
                         locationList.add(hajjLocation);
                     }
                 }
+                Log.d(TAG, "Locations:" + locationList.size() + "");
                 iDataBaseRepo.showAllLocations(locationList);
             }
 

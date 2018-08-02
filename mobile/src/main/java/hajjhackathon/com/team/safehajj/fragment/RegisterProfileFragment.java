@@ -14,6 +14,7 @@ import android.widget.EditText;
 
 import hajjhackathon.com.team.safehajj.AppNavigator;
 import hajjhackathon.com.team.safehajj.R;
+import hajjhackathon.com.team.safehajj.connection.gps.TrackingService;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,13 +78,21 @@ public class RegisterProfileFragment extends Fragment {
         signUpCircle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (isCreateCircle) {
+                    TrackingService.getCircleID(true);
+                } else {
+                    TrackingService.getCircleID(false);
+                    TrackingService.circleId = circleIdNameEditText.getText().toString();
+                }
                 AppNavigator.INSTANCE.goToMapsActivity(getActivity(), null);
             }
         });
-        if (isCreateCircle)
+        if (isCreateCircle) {
             circleIdNameEditText.setHint("Circle Name");
+        }
         else
             circleIdNameEditText.setHint("Circle Id");
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
