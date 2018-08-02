@@ -8,11 +8,13 @@
     <color name="transparent">#00000000</color>
     <color name="circleStrokeColor">#1a6b51</color>
     <color name="circleColor">#2aaa82</color>
+    <color name="join_circle">#1FB4E2</color>
 
     <color name="green">#2aaa82</color>
     <color name="white">#ffffff</color>
     <color name="dark_grey">#161f2c</color>
     <color name="grey">#c8d1de</color>
     <color name="grey2">#a8aaac</color>
+    <color name="grey3">#b7ffffff</color>
 
 </resources>
