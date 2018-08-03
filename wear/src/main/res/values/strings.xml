@@ -9,4 +9,5 @@
     <string name="download_app">Download Safe Hajj</string>
     <string name="you_are_in_safe">You are in safe ^_^</string>
     <string name="connect_with_mobile">Connect with mobile</string>
+    <string name="danger_return">Please back , you out of safe range</string>
 </resources>
