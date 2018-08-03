@@ -28,6 +28,8 @@ public class DistanceCalculator {
     }
 
     public double greatCircleInMeters(LatLng latLng1, LatLng latLng2) {
+        if (latLng1 == null || latLng2 == null)
+            return 0;
         return greatCircleInKilometers(latLng1.latitude, latLng1.longitude, latLng2.latitude,
                 latLng2.longitude) * 1000;
     }

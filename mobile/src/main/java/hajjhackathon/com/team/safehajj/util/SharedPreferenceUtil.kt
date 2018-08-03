@@ -19,7 +19,7 @@ object SharedPreferenceUtil {
      * @return The value from shared preferences, or null if the value could not be read.
      */
     fun getStringPreference(context: Context, key: String): String? {
-        var value: String? = null
+        var value: String? = ""
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         if (preferences != null) {
             value = preferences.getString(key, null)
@@ -180,6 +180,17 @@ object SharedPreferenceUtil {
         if (preferences != null) {
             val editor = preferences.edit()
             editor.putBoolean(key, value)
+            return editor.commit()
+        }
+        return false
+    }
+
+
+    fun remove(context: Context , key: String): Boolean {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        if (preferences != null) {
+            val editor = preferences.edit()
+            editor.remove(key )
             return editor.commit()
         }
         return false

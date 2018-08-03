@@ -15,12 +15,12 @@ class AuthenticationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_authentication)
         if (intent.extras != null && intent.extras.containsKey(DEEP_LINK_URI)) {
             var deepLink = intent.extras.getString(DEEP_LINK_URI);
-            var registerFragment = RegisterProfileFragment.newInstance(false);
+            var registerFragment = RegisterProfileFragment.newInstance(false)
             registerFragment.setDeepLink(deepLink);
-            AppNavigator.loadFragment(this,
-                    registerFragment, getAuthContainerId(), false)
-        } else
+            AppNavigator.loadFragment(this, registerFragment, getAuthContainerId(), false)
+        } else {
             AppNavigator.loadFragment(this, CreateJoinCircleFragment.newInstance(), getAuthContainerId(), false)
+        }
 
     }
 

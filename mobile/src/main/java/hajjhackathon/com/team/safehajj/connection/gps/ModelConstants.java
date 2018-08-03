@@ -8,5 +8,5 @@ public class ModelConstants {
     public static final String LONGITUDE = "longitude";
     public static final String TIME = "time";
     public static final String VERTICALACCURACYMETERS = "verticalAccuracyMeters";
-
+    public static final String TOKEN = "token";
 }

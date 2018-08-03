@@ -31,8 +31,12 @@ class SplashActivity : AppCompatActivity() {
 
     private fun afterSplashAction() {
         var userName = SharedPreferenceUtil.getStringPreference(this, AppConstants.USER_NAME_KEY)
-        var currentCircleId = PreferenceManager.getDefaultSharedPreferences(this).getString(getString(R.string.circle_id_sharedpreferences_key),
-                TrackingService.circleId)
+        var circleId = (SharedPreferenceUtil.getStringPreference(this,
+                getString(R.string.circle_id_sharedpreferences_key)))
+
+        var currentCircleId =  if (circleId.isNullOrEmpty()) TrackingService.circleId else circleId
+
+
         when (currentCircleId != null) {
 
             true -> {
@@ -44,7 +48,6 @@ class SplashActivity : AppCompatActivity() {
 
             }
         }
-//        AppNavigator.goToMapsActivity(this,deeplLinkUri)
     }
 
 }

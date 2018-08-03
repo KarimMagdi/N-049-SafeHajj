@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
@@ -30,6 +31,8 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import java.util.UUID;
 
 import hajjhackathon.com.team.safehajj.R;
+import hajjhackathon.com.team.safehajj.fragment.RegisterProfileFragment;
+import hajjhackathon.com.team.safehajj.util.SharedPreferenceUtil;
 
 
 public class TrackingService extends Service {
@@ -121,10 +124,14 @@ public class TrackingService extends Service {
                 @Override
                 public void onLocationResult(LocationResult locationResult) {
                     //Get a reference to the database, so your app can perform read and write operations//
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + circleId + "/" + TOKEN + "/location");
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference(circleId + "/" + TOKEN);
                     Location location = (Location) locationResult.getLastLocation();
                     HajjLocation hajjLocation = new HajjLocation();
-                    hajjLocation.setAdmin(false);
+                    boolean isAdmin = SharedPreferenceUtil.INSTANCE.getBooleanPreference(TrackingService.this, "isAdmin", false);
+                    if (isAdmin) {
+                        hajjLocation.setAdmin(true);
+                    } else
+                        hajjLocation.setAdmin(false);
                     hajjLocation.setAltitude(location.getAltitude());
                     hajjLocation.setLatitude(location.getLatitude());
                     hajjLocation.setLongitude(location.getLongitude());
@@ -136,8 +143,6 @@ public class TrackingService extends Service {
                         //Save the location data to the database//
                         Log.d(TAG, "Firebase Location " + hajjLocation);
                         ref.setValue(hajjLocation);
-                        if (true)
-                            setUserIsOut(hajjLocation);
                         //Log.d(TAG, "Firebase Locations: " + DatabaseRepo.getAllLocations("",this));
                     }
                 }
@@ -157,7 +162,7 @@ public class TrackingService extends Service {
         return circleId;
     }
 
-    public void setUserIsOut(HajjLocation userIsOut) {
+    public static void setUserIsOut(HajjLocation userIsOut) {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("outuser/user");
         ref.setValue(userIsOut);
     }

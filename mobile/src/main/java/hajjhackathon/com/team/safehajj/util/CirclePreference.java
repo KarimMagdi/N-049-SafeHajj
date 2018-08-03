@@ -11,32 +11,31 @@ import android.content.SharedPreferences;
 public class CirclePreference {
 
     private static CirclePreference circlePreference;
-    private static SharedPreferences sharedPreferences;
+    private static SharedPreferenceUtil sharedPreferences;
     private static SharedPreferences.Editor editor;
     private static final String SHAREDNAMECIRCLE = "circleData";
     private static final String CIRCLENAMEPREF = "circleName";
-    private Activity activity;
+    private static Activity activity;
 
     private CirclePreference() {
 
-        sharedPreferences = activity.getSharedPreferences(SHAREDNAMECIRCLE, Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
+        sharedPreferences = SharedPreferenceUtil.INSTANCE;
     }
 
-    public static CirclePreference newInstance(Activity activity) {
-
+    public static CirclePreference newInstance(Activity activity1) {
+        activity = activity1;
         if (circlePreference == null)
             circlePreference = new CirclePreference();
         return circlePreference;
     }
 
-    public void setCircleName(String cicleName) {
-        editor.putString("", CIRCLENAMEPREF);
-        editor.commit();
+    public void setCircleName(String circleName) {
+        sharedPreferences.setStringPreference(activity,CIRCLENAMEPREF,circleName);
     }
 
     public String getCircleName() {
-        return sharedPreferences.getString(CIRCLENAMEPREF, "");
+        return (sharedPreferences.getStringPreference(activity,CIRCLENAMEPREF) != null) ?
+                sharedPreferences.getStringPreference(activity,CIRCLENAMEPREF):"";
     }
 
 }
