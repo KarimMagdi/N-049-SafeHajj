@@ -45,6 +45,7 @@ public class DatabaseRepo {
                         hajjLocation.setLatitude((double) mapObj.get(ModelConstants.LATITUDE));
                         hajjLocation.setLongitude((double) mapObj.get(ModelConstants.LONGITUDE));
                         hajjLocation.setTime((long) mapObj.get(ModelConstants.TIME));
+                        hajjLocation.setToken(String.valueOf(mapObj.get(ModelConstants.TOKEN)));
 //                        hajjLocation.setVerticalAccuracyMeters((double) mapObj.get(ModelConstants.VERTICALACCURACYMETERS));
                         locationList.add(hajjLocation);
                     }

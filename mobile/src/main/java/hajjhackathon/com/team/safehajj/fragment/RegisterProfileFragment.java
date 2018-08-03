@@ -15,6 +15,7 @@ import hajjhackathon.com.team.safehajj.AppNavigator;
 import hajjhackathon.com.team.safehajj.R;
 import hajjhackathon.com.team.safehajj.connection.gps.TrackingService;
 import hajjhackathon.com.team.safehajj.util.CirclePreference;
+import hajjhackathon.com.team.safehajj.util.SharedPreferenceUtil;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,7 +32,7 @@ public class RegisterProfileFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
     private static String mIsCreateCircle = "mIsCreateCircle";
-    private boolean isCreateCircle;
+    public static boolean isCreateCircle;
     private EditText circleIdNameEditText;
     private EditText userIdEditText;
     private EditText userNameEditText;
@@ -100,11 +101,12 @@ public class RegisterProfileFragment extends Fragment {
                     PreferenceManager.getDefaultSharedPreferences(getContext()).edit().
                             putString(getString(R.string.circle_id_sharedpreferences_key),
                                     newCircleId).apply();
-
                     circleName = circleIdNameEditText.getText().toString();
+                    SharedPreferenceUtil.INSTANCE.setBooleanPreference(getContext(), "isAdmin", true);
 
                 } else {
                     TrackingService.getCircleID(false);
+                    SharedPreferenceUtil.INSTANCE.setBooleanPreference(getContext(), "isAdmin", false);
                     TrackingService.circleId = circleIdNameEditText.getText().toString();
                     PreferenceManager.getDefaultSharedPreferences(getContext()).edit().
                             putString(getString(R.string.circle_id_sharedpreferences_key),

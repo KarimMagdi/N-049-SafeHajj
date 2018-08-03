@@ -38,6 +38,7 @@ import hajjhackathon.com.team.safehajj.R;
 import hajjhackathon.com.team.safehajj.connection.gps.DatabaseRepo;
 import hajjhackathon.com.team.safehajj.connection.gps.HajjLocation;
 import hajjhackathon.com.team.safehajj.connection.gps.IDataBaseRepo;
+import hajjhackathon.com.team.safehajj.connection.gps.MyFirebaseMessagingService;
 import hajjhackathon.com.team.safehajj.connection.gps.TrackingService;
 import hajjhackathon.com.team.safehajj.util.CirclePreference;
 import hajjhackathon.com.team.safehajj.util.SharedPreferenceUtil;
@@ -200,9 +201,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         //endregion
 
-
-        for (int i = 0; i < allLocations.size(); i++) {
-            HajjLocation currHajjLocation = allLocations.get(i);
+        for (HajjLocation hajjLocation : locations) {
+            HajjLocation currHajjLocation = hajjLocation;
             currLatLng = new LatLng(currHajjLocation.getLatitude()
                     , currHajjLocation.getLongitude());
             mMap.addMarker(new MarkerOptions()
@@ -217,10 +217,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //region check for distance
                 if (distanceBetweenPointsAndAdmin > 100) {
                     Toast.makeText(this, "distance > 100", Toast.LENGTH_LONG).show();
-                    HajjLocation oddHajjLocation = new HajjLocation();
-                    oddHajjLocation.setLatitude(currLatLng.latitude);
-                    oddHajjLocation.setLongitude(currLatLng.longitude);
+                    HajjLocation oddHajjLocation = currHajjLocation;
+                    oddHajjLocation.setOut(true);
+                    if (MyFirebaseMessagingService.isReceived) {
+                        oddHajjLocation.setReceived(true);
+                    }
+                    TrackingService.setUserIsOut(oddHajjLocation);
                     oddLocations.add(oddHajjLocation);
+
                 }
                 //endregion
 

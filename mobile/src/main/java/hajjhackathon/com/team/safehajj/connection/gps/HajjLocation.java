@@ -22,6 +22,16 @@ public class HajjLocation implements Serializable {
     private double verticalAccuracyMeters;
     private String token;
 
+    public boolean isReceived() {
+        return isReceived;
+    }
+
+    public void setReceived(boolean received) {
+        isReceived = received;
+    }
+
+    private boolean isReceived;
+
     public String getToken() {
         return token;
     }
