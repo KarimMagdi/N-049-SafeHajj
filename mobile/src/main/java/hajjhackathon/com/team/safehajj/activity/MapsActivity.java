@@ -58,7 +58,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        getExtrasIntent(getIntent().getExtras());
+//        getExtrasIntent(getIntent().getExtras());
         logOutButton = findViewById(R.id.log_button);
         logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,6 +133,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.share) {
+            getExtrasIntent(getIntent().getExtras());
+        }
         TrackingService.circleId = null;
         return true;
     }
@@ -265,4 +268,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         editor.putString("CIRCLENAMEPREF", circleName);
         editor.commit();
     }
+
+
 }
