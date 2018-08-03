@@ -88,7 +88,7 @@ public class RegisterProfileFragment extends Fragment {
         userNameEditText = view.findViewById(R.id.editText_userName);
         if (circleName != null) {
             CirclePreference circlePreference =
-                    CirclePreference.newInstance(getActivity());
+                    CirclePreference.newInstance();
             circlePreference.setCircleName(circleName);
             circleIdNameEditText.setText(circleName);
         }

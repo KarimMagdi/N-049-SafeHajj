@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +51,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private boolean fireBaseServiceStarted = false;
     private List<HajjLocation> allLocations;
     private Button logOutButton;
+    private ImageView shareButton;
     private boolean isCreateCircle;
     private static final String ISCREATECIRCLE = "isCreateCircle";
     private static final String CIRCLENAME = "circleName";
@@ -62,6 +64,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
 //        getExtrasIntent(getIntent().getExtras());
         logOutButton = findViewById(R.id.log_button);
+        shareButton=findViewById(R.id.log_share);
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getExtrasIntent(getIntent().getExtras());
+            }
+        });
         logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,7 +104,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
 
-        ((TextView)findViewById(R.id.circleNameTextView)).setText(CirclePreference.newInstance(this).getCircleName());
+       ((TextView)findViewById(R.id.circleNameTextView)).setText(CirclePreference.newInstance().getCircleName());
 
     }
 
@@ -108,7 +117,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (isCreateCircle) {
                 if (circleName != null) {
                     CirclePreference circlePreference =
-                            CirclePreference.newInstance(this);
+                            CirclePreference.newInstance();
                     circlePreference.setCircleName(circleName);
                 }
                 String deepLink = DEEPLINKSCHEMA + TrackingService.getCircleID(false)
@@ -137,9 +146,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.share) {
-            getExtrasIntent(getIntent().getExtras());
-        }
+
         TrackingService.circleId = null;
         return true;
     }
