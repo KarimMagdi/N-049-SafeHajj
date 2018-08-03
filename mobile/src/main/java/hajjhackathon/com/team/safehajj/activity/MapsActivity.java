@@ -109,11 +109,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void getExtrasIntent(Bundle extras) {
-        if (extras.containsKey(ISCREATECIRCLE)) {
-            isCreateCircle = extras.getBoolean(ISCREATECIRCLE);
+        isCreateCircle = SharedPreferenceUtil.INSTANCE.getBooleanPreference(this, "isAdmin", false); //extras.getBoolean(ISCREATECIRCLE);
             String circleName = null;
-            if (extras.containsKey(CIRCLENAME))
-                circleName = extras.getString(CIRCLENAME);
+        circleName = CirclePreference.newInstance().getCircleName();//extras.getString(CIRCLENAME);
             if (isCreateCircle) {
                 if (circleName != null) {
                     CirclePreference circlePreference =
@@ -124,8 +122,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         + "/" + circleName;
                 openShareDialog(deepLink);
             }
-
-        }
 
 
     }
@@ -225,7 +221,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         adminLatLng);
                 Toast.makeText(this, "distanceBetweenPoints = " + distanceBetweenPointsAndAdmin, Toast.LENGTH_LONG).show();
                 //region check for distance
-                if (distanceBetweenPointsAndAdmin > 100) {
+                if (distanceBetweenPointsAndAdmin > AppConstants.Companion.getCIRCLE_RADUIS()) {
                     Toast.makeText(this, "distance > 100", Toast.LENGTH_LONG).show();
                     HajjLocation oddHajjLocation = currHajjLocation;
                     oddHajjLocation.setOut(true);
@@ -245,7 +241,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             drawSafeCircle(adminLatLng);
             //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(adminLatLng, 12.0f));
             // Zoom in, animating the camera.
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(adminLatLng, 12.0f));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(adminLatLng, 17.0f));
         }
         // TODO: 8/2/18  handle rejection permissions
     }

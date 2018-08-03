@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,11 +66,21 @@ public class RegisterProfileFragment extends Fragment {
         }
         if (!isCreateCircle && deepLink != null) {
             parseCircleName(deepLink);
+            parseCircleId(deepLink);
         }
     }
 
     private void parseCircleName(String deepLink) {
         circleName = deepLink.substring(deepLink.lastIndexOf("/") + 1);
+
+    }
+
+    private void parseCircleId(String deepLink) {
+        String circleName = deepLink.substring(deepLink.lastIndexOf("/"));
+        String deepLinkUpdated = deepLink.replace(circleName, "");
+        String circleId = deepLinkUpdated.substring(deepLinkUpdated.lastIndexOf("/") + 1);
+        Log.e("circleId", circleId);
+        TrackingService.circleId = circleId;
 
     }
 
@@ -103,11 +114,12 @@ public class RegisterProfileFragment extends Fragment {
                                     newCircleId).apply();
                     circleName = circleIdNameEditText.getText().toString();
                     SharedPreferenceUtil.INSTANCE.setBooleanPreference(getContext(), "isAdmin", true);
+                    SharedPreferenceUtil.INSTANCE.setStringPreference(getContext(), "circleName", circleName);
 
                 } else {
                     TrackingService.getCircleID(false);
                     SharedPreferenceUtil.INSTANCE.setBooleanPreference(getContext(), "isAdmin", false);
-                    TrackingService.circleId = circleIdNameEditText.getText().toString();
+                    //TrackingService.circleId = circleIdNameEditText.getText().toString();
                     PreferenceManager.getDefaultSharedPreferences(getContext()).edit().
                             putString(getString(R.string.circle_id_sharedpreferences_key),
                                     TrackingService.circleId).apply();

@@ -18,34 +18,40 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         Handler().postDelayed({ afterSplashAction() }, SPLASH_SCREEN_DELAY_TIME)
-        getDeepLinkIfThere()
+
     }
 
-    private fun getDeepLinkIfThere() {
+//    private fun getDeepLinkIfThere() {
+//        var uri = intent.data
+//        if (uri != null) {
+//            deeplLinkUri = uri.toString()
+//            AppNavigator.goToAuthenticationActivity(this, deeplLinkUri)
+//        }
+//    }
+
+    private fun afterSplashAction() {
         var uri = intent.data
         if (uri != null) {
             deeplLinkUri = uri.toString()
             AppNavigator.goToAuthenticationActivity(this, deeplLinkUri)
-        }
-    }
+        } else {
+            var userName = SharedPreferenceUtil.getStringPreference(this, AppConstants.USER_NAME_KEY)
+            var circleId = (SharedPreferenceUtil.getStringPreference(this,
+                    getString(R.string.circle_id_sharedpreferences_key)))
 
-    private fun afterSplashAction() {
-        var userName = SharedPreferenceUtil.getStringPreference(this, AppConstants.USER_NAME_KEY)
-        var circleId = (SharedPreferenceUtil.getStringPreference(this,
-                getString(R.string.circle_id_sharedpreferences_key)))
-
-        var currentCircleId =  if (circleId.isNullOrEmpty()) TrackingService.circleId else circleId
+            var currentCircleId = if (circleId.isNullOrEmpty()) TrackingService.circleId else circleId
 
 
-        when (currentCircleId != null) {
+            when (currentCircleId != null) {
 
-            true -> {
-                TrackingService.circleId = currentCircleId
-                AppNavigator.goToMapsActivity(this, deeplLinkUri, false,"")
-            }
-            false -> {
-                AppNavigator.goToAuthenticationActivity(this, deeplLinkUri)
+                true -> {
+                    TrackingService.circleId = currentCircleId
+                    AppNavigator.goToMapsActivity(this, deeplLinkUri, false, "")
+                }
+                false -> {
+                    AppNavigator.goToAuthenticationActivity(this, deeplLinkUri)
 
+                }
             }
         }
     }
